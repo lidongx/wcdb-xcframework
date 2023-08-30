@@ -1,0 +1,2897 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=unchecked -O -module-name WCDB
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import Foundation
+import Swift
+@_exported import WCDB
+import WCDB_Private
+import _Concurrency
+import _StringProcessing
+public protocol ExpressionUnaryOperable : WCDB.ExpressionConvertible {
+  prefix static func ! (operand: Self) -> WCDB.Expression
+  prefix static func + (operand: Self) -> WCDB.Expression
+  prefix static func - (operand: Self) -> WCDB.Expression
+  prefix static func ~ (operand: Self) -> WCDB.Expression
+  func isNull() -> WCDB.Expression
+  func isNotNull() -> WCDB.Expression
+}
+extension WCDB.ExpressionUnaryOperable {
+  prefix public static func ! (operand: Self) -> WCDB.Expression
+  prefix public static func + (operand: Self) -> WCDB.Expression
+  prefix public static func - (operand: Self) -> WCDB.Expression
+  prefix public static func ~ (operand: Self) -> WCDB.Expression
+  public func isNull() -> WCDB.Expression
+  public func isNotNull() -> WCDB.Expression
+}
+public protocol ExpressionBinaryOperable : WCDB.ExpressionConvertible {
+  static func || <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func && <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func * <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func / <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func % <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func + <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func - <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func << <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func >> <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func & <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func | <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func < <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func <= <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func > <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func >= <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func == <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  static func != <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  func concat(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+}
+extension WCDB.ExpressionBinaryOperable {
+  public static func || <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func && <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func * <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func / <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func % <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func + <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func - <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func << <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func >> <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func & <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func | <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func < <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func <= <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func > <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func >= <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func == <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public static func != <ExpressionConvertibleType>(left: Self, right: ExpressionConvertibleType) -> WCDB.Expression where ExpressionConvertibleType : WCDB.ExpressionConvertible
+  public func concat(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+}
+public protocol ExpressionBetweenOperable : WCDB.ExpressionConvertible {
+  func between(_ begin: WCDB.ExpressionConvertible, _ end: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func notBetween(_ begin: WCDB.ExpressionConvertible, _ end: WCDB.ExpressionConvertible) -> WCDB.Expression
+}
+extension WCDB.ExpressionBetweenOperable {
+  public func between(_ begin: WCDB.ExpressionConvertible, _ end: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func notBetween(_ begin: WCDB.ExpressionConvertible, _ end: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func between(_ begin: WCDB.ExpressionConvertible, _ end: WCDB.ExpressionConvertible, isNot: Swift.Bool) -> WCDB.Expression
+}
+public protocol ExpressionInOperable : WCDB.ExpressionConvertible {
+  func `in`(function: Swift.String) -> WCDB.Expression
+  func notIn(function: Swift.String) -> WCDB.Expression
+  func inTable(_ name: Swift.String) -> WCDB.Expression
+  func notInTable(_ name: Swift.String) -> WCDB.Expression
+  func `in`(_ statementSelect: WCDB.StatementSelect) -> WCDB.Expression
+  func notIn(_ statementSelect: WCDB.StatementSelect) -> WCDB.Expression
+  func `in`(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.Expression
+  func notIn(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.Expression
+  func `in`(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.Expression
+  func notIn(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.Expression
+}
+extension WCDB.ExpressionInOperable {
+  public func `in`(function: Swift.String) -> WCDB.Expression
+  public func notIn(function: Swift.String) -> WCDB.Expression
+  public func inTable(_ name: Swift.String) -> WCDB.Expression
+  public func notInTable(_ name: Swift.String) -> WCDB.Expression
+  public func `in`(_ statementSelect: WCDB.StatementSelect) -> WCDB.Expression
+  public func notIn(_ statementSelect: WCDB.StatementSelect) -> WCDB.Expression
+  public func `in`(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.Expression
+  public func notIn(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.Expression
+  public func `in`(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.Expression
+  public func notIn(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.Expression
+}
+public protocol ExpressionCollateOperable : WCDB.ExpressionConvertible {
+  func collate(_ collation: Swift.String) -> WCDB.Expression
+}
+extension WCDB.ExpressionCollateOperable {
+  public func collate(_ collation: Swift.String) -> WCDB.Expression
+}
+public protocol ExpressionFunctionOperable : WCDB.ExpressionConvertible {
+  func substr(start: WCDB.ExpressionConvertible, length: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func like(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func glob(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func match(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func regexp(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func notLike(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func notGlob(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func notMatch(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func notRegexp(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func `is`(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func isNot(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  func collate(_ collation: Swift.String) -> WCDB.Expression
+  func avg(isDistinct: Swift.Bool) -> WCDB.Expression
+  func count(isDistinct: Swift.Bool) -> WCDB.Expression
+  func groupConcat(isDistinct: Swift.Bool) -> WCDB.Expression
+  func groupConcat(isDistinct: Swift.Bool, separateBy seperator: Swift.String) -> WCDB.Expression
+  func max(isDistinct: Swift.Bool) -> WCDB.Expression
+  func min(isDistinct: Swift.Bool) -> WCDB.Expression
+  func sum(isDistinct: Swift.Bool) -> WCDB.Expression
+  func total(isDistinct: Swift.Bool) -> WCDB.Expression
+  func abs() -> WCDB.Expression
+  func hex() -> WCDB.Expression
+  func length() -> WCDB.Expression
+  func lower() -> WCDB.Expression
+  func upper() -> WCDB.Expression
+  func round() -> WCDB.Expression
+  func matchinfo() -> WCDB.Expression
+  func offsets() -> WCDB.Expression
+  func snippet() -> WCDB.Expression
+  func bm25() -> WCDB.Expression
+  func highlight() -> WCDB.Expression
+  func substringMatchInfo() -> WCDB.Expression
+}
+extension WCDB.ExpressionFunctionOperable {
+  public func substr(start: WCDB.ExpressionConvertible, length: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func like(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func glob(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func match(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func regexp(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func notLike(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func notGlob(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func notMatch(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func notRegexp(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func `is`(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func isNot(_ operand: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public func avg(isDistinct: Swift.Bool = false) -> WCDB.Expression
+  public func count(isDistinct: Swift.Bool = false) -> WCDB.Expression
+  public func groupConcat(isDistinct: Swift.Bool = false) -> WCDB.Expression
+  public func groupConcat(isDistinct: Swift.Bool = false, separateBy seperator: Swift.String) -> WCDB.Expression
+  public func max(isDistinct: Swift.Bool = false) -> WCDB.Expression
+  public func min(isDistinct: Swift.Bool = false) -> WCDB.Expression
+  public func sum(isDistinct: Swift.Bool = false) -> WCDB.Expression
+  public func total(isDistinct: Swift.Bool = false) -> WCDB.Expression
+  public func abs() -> WCDB.Expression
+  public func hex() -> WCDB.Expression
+  public func length() -> WCDB.Expression
+  public func lower() -> WCDB.Expression
+  public func upper() -> WCDB.Expression
+  public func round() -> WCDB.Expression
+  public func matchinfo() -> WCDB.Expression
+  public func offsets() -> WCDB.Expression
+  public func snippet() -> WCDB.Expression
+  public func bm25() -> WCDB.Expression
+  public func highlight() -> WCDB.Expression
+  public func substringMatchInfo() -> WCDB.Expression
+}
+public typealias ExpressionOperable = WCDB.ExpressionBetweenOperable & WCDB.ExpressionBinaryOperable & WCDB.ExpressionCollateOperable & WCDB.ExpressionFunctionOperable & WCDB.ExpressionInOperable & WCDB.ExpressionUnaryOperable
+public struct Master : WCDB.TableCodable {
+  public static let builtinTableName: Swift.String
+  public var type: Swift.String?
+  public var name: Swift.String?
+  public var tableName: Swift.String?
+  public var rootpage: Swift.Int?
+  public var sql: Swift.String?
+  public enum CodingKeys : Swift.String, WCDB.CodingTableKey {
+    public typealias Root = WCDB.Master
+    case type
+    case name
+    case tableName
+    case rootpage
+    case sql
+    public static let objectRelationalMapping: WCDB.TableBinding<WCDB.Master.CodingKeys>
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init()
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class TableOrSubquery : WCDB.Identifier<WCDB_Private.CPPTableOrSubquery> {
+  convenience public init(withTable table: Swift.String)
+  convenience public init(with join: WCDB.Join)
+  convenience public init(with tableOrSubqueryConvertibleList: WCDB.TableOrSubqueryConvertible...)
+  convenience public init(with tableOrSubqueryConvertibleList: [WCDB.TableOrSubqueryConvertible])
+  convenience public init(with statementSelect: WCDB.StatementSelect)
+  @discardableResult
+  final public func `as`(alias: Swift.String) -> WCDB.TableOrSubquery
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.TableOrSubquery
+  @discardableResult
+  final public func notIndexed() -> WCDB.TableOrSubquery
+  @discardableResult
+  final public func indexed(by indexName: Swift.String) -> WCDB.TableOrSubquery
+  public static func function(_ name: Swift.String) -> WCDB.TableOrSubquery
+  @discardableResult
+  final public func arguments(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.TableOrSubquery
+  @discardableResult
+  final public func arguments(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.TableOrSubquery
+  public static func master() -> WCDB.TableOrSubquery
+  @objc deinit
+}
+extension WCDB.TableOrSubquery : WCDB.TableOrSubqueryConvertible {
+  final public func asTableOrSubquery() -> WCDB.TableOrSubquery
+}
+extension Swift.String : WCDB.TableOrSubqueryConvertible {
+  public func asTableOrSubquery() -> WCDB.TableOrSubquery
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class ColumnConstraint : WCDB.Identifier<WCDB_Private.CPPColumnConstraint> {
+  convenience public init(named name: Swift.String? = nil)
+  @discardableResult
+  final public func primaryKey() -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func order(_ order: WCDB.Order) -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func conflict(action: WCDB.ConflictAction) -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func autoIncrement() -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func notNull() -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func unique() -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func check(with expression: WCDB.Expression) -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func `default`(with expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func collate(with collation: Swift.String) -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func foreignKey(with key: WCDB.ForeignKey) -> WCDB.ColumnConstraint
+  @discardableResult
+  final public func unIndexed() -> WCDB.ColumnConstraint
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class ResultColumn : WCDB.Identifier<WCDB_Private.CPPResultColumn> {
+  convenience public init(with expressionConvertible: WCDB.ExpressionConvertible)
+  @discardableResult
+  final public func `as`(_ alias: Swift.String) -> WCDB.ResultColumn
+  @objc deinit
+}
+extension WCDB.ResultColumn : WCDB.ResultColumnConvertible {
+  final public func asResultColumn() -> WCDB.ResultColumn
+}
+extension WCDB.PreparedStatement : WCDB.StatementInterfaceForObjc {
+}
+public protocol UpdateInterface : AnyObject {
+  func update<Object>(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with object: Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws where Object : WCDB.TableEncodable
+  func update<Object>(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with object: Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws where Object : WCDB.TableEncodable
+  func update(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with row: WCDB.ColumnEncodable..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with row: WCDB.ColumnEncodable..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+}
+extension WCDB.UpdateInterface where Self : WCDB.HandleRepresentable {
+  public func update<Object>(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with object: Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws where Object : WCDB.TableEncodable
+  public func update<Object>(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with object: Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws where Object : WCDB.TableEncodable
+  public func update(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  public func update(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with row: WCDB.ColumnEncodable..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  public func update(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with row: WCDB.ColumnEncodable..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  public func update(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+}
+public protocol TableCodableBase {
+}
+public protocol TableEncodableBase : Swift.Encodable, WCDB.TableCodableBase {
+}
+public protocol TableEncodable : WCDB.TableEncodableBase {
+  associatedtype CodingKeys : WCDB.CodingTableKey where Self == Self.CodingKeys.Root
+  typealias Properties = Self.CodingKeys
+  var isAutoIncrement: Swift.Bool { get }
+  var lastInsertedRowID: Swift.Int64 { get set }
+}
+extension WCDB.TableEncodable {
+  public var isAutoIncrement: Swift.Bool {
+    get
+  }
+  public var lastInsertedRowID: Swift.Int64 {
+    get
+    set
+  }
+}
+public protocol TableDecodableBase : Swift.Decodable, WCDB.TableCodableBase {
+}
+public protocol TableDecodable : WCDB.TableDecodableBase {
+  associatedtype CodingKeys : WCDB.CodingTableKey where Self == Self.CodingKeys.Root
+  typealias Properties = Self.CodingKeys
+}
+public typealias TableCodable = WCDB.TableDecodable & WCDB.TableEncodable
+@_hasMissingDesignatedInitializers final public class StatementInsert : WCDB.Identifier<WCDB_Private.CPPStatementInsert>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: WCDB.CommonTableExpression...) -> WCDB.StatementInsert
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: [WCDB.CommonTableExpression]) -> WCDB.StatementInsert
+  @discardableResult
+  final public func insert(intoTable table: Swift.String) -> WCDB.StatementInsert
+  @discardableResult
+  final public func of(schema schemaConvertibale: WCDB.SchemaConvertible) -> WCDB.StatementInsert
+  @discardableResult
+  final public func `as`(_ alias: Swift.String) -> WCDB.StatementInsert
+  @discardableResult
+  final public func onConflict(_ conflict: WCDB.ConflictAction? = nil) -> WCDB.StatementInsert
+  @discardableResult
+  final public func columns(_ columnConvertibleList: WCDB.ColumnConvertible...) -> WCDB.StatementInsert
+  @discardableResult
+  final public func columns(_ columnConvertibleList: [WCDB.ColumnConvertible]) -> WCDB.StatementInsert
+  @discardableResult
+  final public func values(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.StatementInsert
+  @discardableResult
+  final public func values(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.StatementInsert
+  @discardableResult
+  final public func values(_ select: WCDB.StatementSelect) -> WCDB.StatementInsert
+  final public func defaultValues() -> WCDB.StatementInsert
+  final public func upsert(_ upsert: WCDB.Upsert) -> WCDB.StatementInsert
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementPragma : WCDB.Identifier<WCDB_Private.CPPStatementPragma>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func pragma(_ pragma: WCDB.Pragma) -> WCDB.StatementPragma
+  @discardableResult
+  final public func schema(_ schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementPragma
+  @discardableResult
+  final public func to(_ literalValueConvertible: WCDB.LiteralValueConvertible) -> WCDB.StatementPragma
+  @discardableResult
+  final public func with(_ literalValueConvertible: WCDB.LiteralValueConvertible) -> WCDB.StatementPragma
+  @objc deinit
+}
+public struct Value {
+  public let type: WCDB.ColumnType
+  public init(_: Swift.Void? = nil)
+  public init(_ value: Swift.Int32)
+  public init(_ value: Swift.Int64)
+  public init(_ value: Swift.Double)
+  public init(_ value: Swift.String)
+  public init(_ value: Foundation.Data)
+  public init<T>(_ encodedValue: T) where T : WCDB.ColumnEncodable
+  public var int32Value: Swift.Int32 {
+    get
+  }
+  public var int64Value: Swift.Int64 {
+    get
+  }
+  public var stringValue: Swift.String {
+    get
+  }
+  public var doubleValue: Swift.Double {
+    get
+  }
+  public var dataValue: Foundation.Data {
+    get
+  }
+}
+public typealias OneColumnValue = [WCDB.Value]
+public typealias OneRowValue = [WCDB.Value]
+public typealias MultiRowsValue = [WCDB.OneRowValue]
+extension Swift.Array where Element == [WCDB.Value] {
+  public subscript(row row: Swift.Array<Element>.Index, column column: Swift.Array<WCDB.Value>.Index) -> WCDB.Value {
+    get
+  }
+  public subscript(row row: Swift.Array<Element>.Index) -> WCDB.OneColumnValue {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class StatementRollback : WCDB.Identifier<WCDB_Private.CPPStatementRollback>, WCDB.Statement {
+  public init()
+  final public func rollback(toSavepoint optionalName: Swift.String) -> WCDB.StatementRollback
+  @objc deinit
+}
+final public class VirtualTableConfig : WCDB.TableConfiguration {
+  final public func config(with tableBinding: WCDB.TableBindingBase)
+  public init(withModule version: WCDB.FTSVersion, and tokenizer: Swift.String...)
+  public init(withModule module: Swift.String, and parameters: Swift.String...)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementDropView : WCDB.Identifier<WCDB_Private.CPPStatementDropView>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func drop(view: Swift.String) -> WCDB.StatementDropView
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementDropView
+  @discardableResult
+  final public func ifExists() -> WCDB.StatementDropView
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementDetach : WCDB.Identifier<WCDB_Private.CPPStatementDetach>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func detach(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementDetach
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class PreparedStatement {
+  @objc deinit
+}
+public protocol RawStatementmentRepresentable {
+  func getRawStatement() -> WCDB_Private.CPPHandleStatement
+  func finalizeWhenError() -> Swift.Bool
+}
+extension WCDB.PreparedStatement : WCDB.RawStatementmentRepresentable {
+  final public func getRawStatement() -> WCDB_Private.CPPHandleStatement
+  final public func finalizeWhenError() -> Swift.Bool
+}
+extension WCDB.PreparedStatement : WCDB.StatementInterface {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class Column : WCDB.Identifier<WCDB_Private.CPPColumn> {
+  public static let all: WCDB.Column
+  public static let rowid: WCDB.Column
+  convenience public init(named name: Swift.String)
+  @discardableResult
+  final public func `in`(table: Swift.String) -> WCDB.Column
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Column
+  @objc deinit
+}
+extension WCDB.Column : WCDB.ColumnConvertible, WCDB.ExpressionOperable {
+  final public func asColumn() -> WCDB.Column
+}
+@_hasMissingDesignatedInitializers final public class OrderingTerm : WCDB.Identifier<WCDB_Private.CPPOrderingTerm> {
+  public init(with expressionConvertible: WCDB.ExpressionConvertible)
+  @discardableResult
+  final public func order(_ order: WCDB.Order?) -> WCDB.OrderingTerm
+  @discardableResult
+  final public func collate(_ collation: Swift.String) -> WCDB.OrderingTerm
+  public static func ascendingRowid() -> WCDB.OrderingTerm
+  public static func descendingRowid() -> WCDB.OrderingTerm
+  @objc deinit
+}
+extension WCDB.OrderingTerm : WCDB.OrderingTermConvertible {
+  final public func asOrder() -> WCDB.OrderingTerm
+}
+extension WCDB.Insert {
+  final public func execute<Object>(with objects: Object...) throws where Object : WCDB.WCTTableCoding
+  final public func execute<Object>(with objects: [Object]) throws where Object : WCDB.WCTTableCoding
+}
+@_hasMissingDesignatedInitializers public class Selectable {
+  final public let statement: WCDB.StatementSelect
+  @objc deinit
+  @discardableResult
+  final public func next() throws -> Swift.Bool
+  @discardableResult
+  final public func `where`(_ condition: WCDB.Condition) -> Self
+  @discardableResult
+  final public func order(by orderConvertibleList: WCDB.OrderBy...) -> Self
+  @discardableResult
+  final public func order(by orderConvertibleList: [WCDB.OrderBy]) -> Self
+  @discardableResult
+  final public func limit(from begin: WCDB.Limit, to end: WCDB.Limit) -> Self
+  @discardableResult
+  final public func limit(_ expressionConvertibleLimit: WCDB.Limit) -> Self
+  @discardableResult
+  final public func limit(_ expressionConvertibleLimit: WCDB.Limit, offset expressionConvertibleOffset: WCDB.Offset) -> Self
+  @discardableResult
+  final public func group(by expressionConvertibleGroupList: WCDB.GroupBy...) -> Self
+  @discardableResult
+  final public func group(by expressionConvertibleGroupList: [WCDB.GroupBy]) -> Self
+  @discardableResult
+  final public func having(_ expressionConvertibleHaving: WCDB.Having) -> Self
+}
+final public class IndexConfig<CodingTableKeyType> : WCDB.TableConfiguration where CodingTableKeyType : WCDB.CodingTableKey {
+  final public func config(with tableBinding: WCDB.TableBindingBase)
+  required public init(_ indexes: WCDB.IndexedColumnConvertible..., namedWith subfix: Swift.String, isUnique: Swift.Bool = false)
+  @objc deinit
+}
+extension WCDB.WCTBridgeProperty : WCDB.PropertyOperable {
+  public func isSwiftProperty() -> Swift.Bool
+  public var codingTableKey: WCDB.CodingTableKeyBase? {
+    get
+  }
+  public var wctProperty: WCDB.WCTBridgeProperty? {
+    get
+  }
+  public func asProperty() -> WCDB.Property
+  public func asColumn() -> WCDB.Column
+  public func `as`(_ propertyConvertible: WCDB.PropertyConvertible) -> WCDB.Property
+  public func `in`(table: Swift.String) -> WCDB.Property
+  public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Property
+  public func asExpression() -> WCDB.Expression
+}
+extension Swift.Array where Element == WCDB.WCTBridgeProperty {
+  public var any: WCDB.Column {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class StatementExplain : WCDB.Identifier<WCDB_Private.CPPStatementExplain>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func explain(_ statement: WCDB.Statement) -> WCDB.StatementExplain
+  @discardableResult
+  final public func explainQueryPlan(_ statement: WCDB.Statement) -> WCDB.StatementExplain
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ForeignKey : WCDB.Identifier<WCDB_Private.CPPForeignKey> {
+  public init()
+  @discardableResult
+  final public func references(with table: Swift.String) -> WCDB.ForeignKey
+  @discardableResult
+  final public func columns(_ columnConvertibleList: [WCDB.ColumnConvertible]) -> WCDB.ForeignKey
+  @discardableResult
+  final public func columns(_ columnConvertibleList: WCDB.ColumnConvertible...) -> WCDB.ForeignKey
+  public enum Action {
+    case setNull
+    case setDefault
+    case cascade
+    case restrict
+    case noAction
+    public static func == (a: WCDB.ForeignKey.Action, b: WCDB.ForeignKey.Action) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @discardableResult
+  final public func onDelete(_ action: WCDB.ForeignKey.Action) -> WCDB.ForeignKey
+  @discardableResult
+  final public func onUpdate(_ action: WCDB.ForeignKey.Action) -> WCDB.ForeignKey
+  public enum MatchType {
+    case Simple
+    case Full
+    case Patial
+    public static func == (a: WCDB.ForeignKey.MatchType, b: WCDB.ForeignKey.MatchType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @discardableResult
+  final public func match(with type: WCDB.ForeignKey.MatchType) -> WCDB.ForeignKey
+  public enum Deferrable {
+    case deferred
+    case immediate
+    public static func == (a: WCDB.ForeignKey.Deferrable, b: WCDB.ForeignKey.Deferrable) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @discardableResult
+  final public func deferrable(_ deferrable: WCDB.ForeignKey.Deferrable? = nil) -> WCDB.ForeignKey
+  @discardableResult
+  final public func notDeferrable(_ deferrable: WCDB.ForeignKey.Deferrable? = nil) -> WCDB.ForeignKey
+  @objc deinit
+}
+public protocol InsertTableInterface : AnyObject {
+  associatedtype Object : WCDB.TableEncodable
+  func insert(_ objects: Self.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insert(_ objects: [Self.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrReplace(_ objects: Self.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrReplace(_ objects: [Self.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrIgnore(_ objects: Self.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrIgnore(_ objects: [Self.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+}
+public protocol UpdateTableInterface : AnyObject {
+  associatedtype Object : WCDB.TableEncodable
+  func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with object: Self.Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with object: Self.Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+}
+public protocol DeleteTableInterface : AnyObject {
+  func delete(where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+}
+public protocol RowSelectTableInterface : AnyObject {
+  func getRows(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.MultiRowsValue
+  func getRows(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.MultiRowsValue
+  func getRow(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> WCDB.OneRowValue
+  func getRow(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> WCDB.OneRowValue
+  func getColumn(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.OneColumnValue
+  func getDistinctColumn(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.OneColumnValue
+  func getValue(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.Value
+  func getDistinctValue(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.Value
+}
+public protocol SelectTableInterface : AnyObject {
+  associatedtype Object : WCDB.TableDecodable
+  func getObjects(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Self.Object]
+  func getObjects(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Self.Object]
+  func getObject(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Self.Object?
+  func getObject(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Self.Object?
+}
+public protocol TableInterfaceForObjc : AnyObject {
+  func create<Root>(table name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.WCTTableCoding
+  func create<Root>(virtualTable name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.WCTTableCoding
+}
+extension WCDB.TableInterfaceForObjc where Self : WCDB.Database {
+  public func create<Root>(table name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.WCTTableCoding
+  public func create<Root>(virtualTable name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.WCTTableCoding
+}
+@_hasMissingDesignatedInitializers final public class StatementDropTable : WCDB.Identifier<WCDB_Private.CPPStatementDropTable>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func drop(table: Swift.String) -> WCDB.StatementDropTable
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementDropTable
+  @discardableResult
+  final public func ifExists() -> WCDB.StatementDropTable
+  @objc deinit
+}
+final public class ForeignKeyConfig<CodingTableKeyType> : WCDB.TableConfiguration where CodingTableKeyType : WCDB.CodingTableKey {
+  public init(_ codingKeys: CodingTableKeyType..., foreignKey: WCDB.ForeignKey)
+  final public func config(with tableBinding: WCDB.TableBindingBase)
+  @objc deinit
+}
+final public class MultiUniqueConfig<CodingTableKeyType> : WCDB.TableConfiguration where CodingTableKeyType : WCDB.CodingTableKey {
+  final public func config(with tableBinding: WCDB.TableBindingBase)
+  required public init(_ codingKeys: CodingTableKeyType..., onConflict conflict: WCDB.ConflictAction? = nil)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementCreateTrigger : WCDB.Identifier<WCDB_Private.CPPStatementCreateTrigger>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func create(trigger: Swift.String, isTemp: Swift.Bool = false) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func ifNotExists() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func before() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func after() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func insteadOf() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func delete() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func insert() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func update() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func of(columns columnConvertibleList: WCDB.ColumnConvertible...) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func of(columns columnConvertibleList: [WCDB.ColumnConvertible]) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func on(table: Swift.String) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func forEachRow() -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func when(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func execute(_ insert: WCDB.StatementInsert) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func execute(_ update: WCDB.StatementUpdate) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func execute(_ delete: WCDB.StatementDelete) -> WCDB.StatementCreateTrigger
+  @discardableResult
+  final public func execute(_ select: WCDB.StatementSelect) -> WCDB.StatementCreateTrigger
+  @objc deinit
+}
+public protocol SelectInterfaceForObjc : AnyObject {
+  func getObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Object] where Object : WCDB.WCTTableCoding
+  func getObjects<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Object] where Object : WCDB.WCTTableCoding
+  func getObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Object? where Object : WCDB.WCTTableCoding
+  func getObject<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Object? where Object : WCDB.WCTTableCoding
+}
+extension WCDB.SelectInterfaceForObjc where Self : WCDB.HandleRepresentable {
+  public func getObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [Object] where Object : WCDB.WCTTableCoding
+  public func getObjects<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [Object] where Object : WCDB.WCTTableCoding
+  public func getObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> Object? where Object : WCDB.WCTTableCoding
+  public func getObject<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> Object? where Object : WCDB.WCTTableCoding
+}
+public protocol CodingTableKeyBase : Swift.CodingKey {
+  var rootType: WCDB.TableCodableBase.Type { get }
+}
+public protocol CodingTableKey : Swift.Hashable, Swift.RawRepresentable, WCDB.CodingTableKeyBase, WCDB.ExpressionBetweenOperable, WCDB.ExpressionBinaryOperable, WCDB.ExpressionCollateOperable, WCDB.ExpressionFunctionOperable, WCDB.ExpressionInOperable, WCDB.ExpressionUnaryOperable, WCDB.PropertyConvertible where Self.RawValue == Swift.String {
+  associatedtype Root : WCDB.TableCodableBase
+  static var all: [WCDB.Property] { get }
+  static var any: WCDB.Column { get }
+  static var objectRelationalMapping: WCDB.TableBinding<Self> { get }
+  typealias BindColumnConstraint = WCDB.ColumnConstraintConfig<Self>
+  typealias BindIndex = WCDB.IndexConfig<Self>
+  typealias BindMultiPrimary = WCDB.MultiPrimaryConfig<Self>
+  typealias BindMultiUnique = WCDB.MultiUniqueConfig<Self>
+  typealias BindChecks = WCDB.CheckExpressionConfig
+  typealias BindForeginKey = WCDB.ForeignKeyConfig<Self>
+  typealias BindVirtualTable = WCDB.VirtualTableConfig
+}
+extension WCDB.CodingTableKey {
+  public var rootType: WCDB.TableCodableBase.Type {
+    get
+  }
+}
+extension WCDB.CodingTableKey {
+  public static var all: [WCDB.Property] {
+    get
+  }
+  public static var any: WCDB.Column {
+    get
+  }
+}
+extension WCDB.CodingTableKey {
+  public func isSwiftProperty() -> Swift.Bool
+  public var codingTableKey: WCDB.CodingTableKeyBase? {
+    get
+  }
+  public var wctProperty: WCDB.WCTBridgeProperty? {
+    get
+  }
+  public func `as`(_ propertyConvertible: WCDB.PropertyConvertible) -> WCDB.Property
+  public func asProperty() -> WCDB.Property
+  public func `in`(table: Swift.String) -> WCDB.Property
+  public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Property
+  public func asExpression() -> WCDB.Expression
+  public func asColumn() -> WCDB.Column
+}
+public typealias Describable = Swift.CustomStringConvertible
+@_hasMissingDesignatedInitializers public class Identifier<CPPType> : WCDB.Describable, WCDB.RawCPPObjectRepresentable {
+  public var rawCPPObj: Swift.UnsafeMutablePointer<WCDB_Private.CPPObject> {
+    get
+  }
+  final public var description: Swift.String {
+    get
+  }
+  @objc deinit
+}
+public protocol RawCPPObjectRepresentable {
+  var rawCPPObj: Swift.UnsafeMutablePointer<WCDB_Private.CPPObject> { get }
+}
+@_hasMissingDesignatedInitializers final public class RaiseFunction : WCDB.Identifier<WCDB_Private.CPPRaiseFunction> {
+  public init()
+  @discardableResult
+  final public func ignore() -> WCDB.RaiseFunction
+  @discardableResult
+  final public func rollback(with errorMessage: Swift.String) -> WCDB.RaiseFunction
+  @discardableResult
+  final public func abort(with errorMessage: Swift.String) -> WCDB.RaiseFunction
+  @discardableResult
+  final public func fail(with errorMessage: Swift.String) -> WCDB.RaiseFunction
+  @objc deinit
+}
+extension WCDB.RaiseFunction : WCDB.ExpressionConvertible {
+  final public func asExpression() -> WCDB.Expression
+}
+public protocol PropertyRedirectable {
+  func `as`(_ propertyConvertible: WCDB.PropertyConvertible) -> WCDB.Property
+}
+extension WCDB.PropertyRedirectable where Self : Swift.CustomStringConvertible {
+  public func `as`(_ propertyConvertible: WCDB.PropertyConvertible) -> WCDB.Property
+}
+extension WCDB.Column : WCDB.PropertyRedirectable {
+}
+extension WCDB.ResultColumn : WCDB.PropertyRedirectable {
+}
+extension WCDB.Expression : WCDB.PropertyRedirectable {
+}
+@_hasMissingDesignatedInitializers final public class StatementCreateVirtualTable : WCDB.Identifier<WCDB_Private.CPPStatementCreateVirtualTable>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func create(virtualTable table: Swift.String) -> WCDB.StatementCreateVirtualTable
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementCreateVirtualTable
+  @discardableResult
+  final public func ifNotExists() -> WCDB.StatementCreateVirtualTable
+  @discardableResult
+  final public func using(module: WCDB.FTSVersion) -> WCDB.StatementCreateVirtualTable
+  @discardableResult
+  final public func using(module: Swift.String) -> WCDB.StatementCreateVirtualTable
+  @discardableResult
+  final public func arguments(_ args: [WCDB.Describable]) -> WCDB.StatementCreateVirtualTable
+  @discardableResult
+  final public func arguments(_ args: WCDB.Describable...) -> WCDB.StatementCreateVirtualTable
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Insert {
+  final public var statement: WCDB.StatementInsert {
+    get
+    set
+  }
+  final public func execute<Object>(with objects: Object...) throws where Object : WCDB.TableEncodable
+  final public func execute<Object>(with objects: [Object]) throws where Object : WCDB.TableEncodable
+  @objc deinit
+}
+public protocol TransactionInterface {
+  func begin() throws
+  func commit() throws
+  func rollback() throws
+  var isInTransaction: Swift.Bool { get }
+  typealias TransactionClosure = (WCDB.Handle) throws -> Swift.Void
+  func run(transaction: @escaping Self.TransactionClosure) throws
+  typealias ControlableTransactionClosure = (WCDB.Handle) throws -> Swift.Bool
+  func run(controllableTransaction: @escaping Self.ControlableTransactionClosure) throws
+  typealias PausableTransactionClosure = (WCDB.Handle, inout Swift.Bool, Swift.Bool) throws -> Swift.Void
+  func run(pausableTransaction: @escaping Self.PausableTransactionClosure) throws
+}
+extension WCDB.TransactionInterface where Self : WCDB.HandleRepresentable {
+  public func begin() throws
+  public func commit() throws
+  public func rollback() throws
+  public var isInTransaction: Swift.Bool {
+    get
+  }
+  public func run(transaction: @escaping Self.TransactionClosure) throws
+  public func run(controllableTransaction: @escaping Self.ControlableTransactionClosure) throws
+  public func run(pausableTransaction: @escaping Self.PausableTransactionClosure) throws
+}
+extension WCDB.Table : WCDB.InsertTableInterfaceForObjc where Root : WCDB.WCTTableCoding {
+  final public func insert(_ objects: [WCDB.Table<Root>.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrReplace(_ objects: [WCDB.Table<Root>.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrIgnore(_ objects: [WCDB.Table<Root>.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insert(_ objects: WCDB.Table<Root>.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrReplace(_ objects: WCDB.Table<Root>.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrIgnore(_ objects: WCDB.Table<Root>.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+}
+extension WCDB.Table : WCDB.UpdateTableInterfaceForObjc where Root : WCDB.WCTTableCoding {
+  final public func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with object: WCDB.Table<Root>.Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  final public func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with object: WCDB.Table<Root>.Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  final public func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  final public func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+}
+extension WCDB.Table : WCDB.SelectTableInterfaceForObjc where Root : WCDB.WCTTableCoding {
+  final public func getObjects(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [WCDB.Table<Root>.Object]
+  final public func getObjects(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [WCDB.Table<Root>.Object]
+  final public func getObject(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Table<Root>.Object?
+  final public func getObject(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Table<Root>.Object?
+}
+extension WCDB.Table : WCDB.TableInsertChainCallInterfaceForObjc {
+  final public func prepareInsert<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  final public func prepareInsertOrReplace<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  final public func prepareInsertOrIgnore<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+}
+extension WCDB.Table : WCDB.TableSelectChainCallInterfaceForObjc {
+  final public func prepareSelect<Root>(of cls: Root.Type, isDistinct: Swift.Bool = false) throws -> WCDB.Select where Root : WCDB.WCTTableCoding
+}
+@_hasMissingDesignatedInitializers final public class Table<Root> {
+  public typealias Object = Root
+  final public let name: Swift.String
+  final public var rootType: Root.Type {
+    get
+  }
+  @objc deinit
+}
+extension WCDB.Table : WCDB.InsertTableInterface where Root : WCDB.TableDecodable, Root : WCDB.TableEncodable {
+  final public func insert(_ objects: [WCDB.Table<Root>.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrReplace(_ objects: [WCDB.Table<Root>.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrIgnore(_ objects: [WCDB.Table<Root>.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insert(_ objects: WCDB.Table<Root>.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrReplace(_ objects: WCDB.Table<Root>.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+  final public func insertOrIgnore(_ objects: WCDB.Table<Root>.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil) throws
+}
+extension WCDB.Table : WCDB.UpdateTableInterface where Root : WCDB.TableEncodable {
+  final public func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with object: WCDB.Table<Root>.Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  final public func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with object: WCDB.Table<Root>.Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  final public func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+  final public func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+}
+extension WCDB.Table : WCDB.DeleteTableInterface {
+  final public func delete(where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+}
+extension WCDB.Table : WCDB.SelectTableInterface where Root : WCDB.TableDecodable {
+  final public func getObjects(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [WCDB.Table<Root>.Object]
+  final public func getObjects(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [WCDB.Table<Root>.Object]
+  final public func getObject(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Table<Root>.Object?
+  final public func getObject(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Table<Root>.Object?
+}
+extension WCDB.Table : WCDB.RowSelectTableInterface {
+  final public func getRows(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.MultiRowsValue
+  final public func getRows(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.MultiRowsValue
+  final public func getRow(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneRowValue
+  final public func getRow(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneRowValue
+  final public func getColumn(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneColumnValue
+  final public func getDistinctColumn(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneColumnValue
+  final public func getValue(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Value
+  final public func getDistinctValue(on result: WCDB.ResultColumnConvertible, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Value
+}
+extension WCDB.Table : WCDB.TableInsertChainCallInterface {
+  final public func prepareInsert<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  final public func prepareInsertOrReplace<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  final public func prepareInsertOrIgnore<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  final public func prepareInsert(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Insert
+  final public func prepareInsertOrReplace(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Insert
+  final public func prepareInsertOrIgnore(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Insert
+  final public func prepareInsert(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Insert
+  final public func prepareInsertOrReplace(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Insert
+  final public func prepareInsertOrIgnore(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Insert
+}
+extension WCDB.Table : WCDB.TableDeleteChainCallInterface {
+  final public func prepareDelete() throws -> WCDB.Delete
+}
+extension WCDB.Table : WCDB.TableUpdateChainCallInterface {
+  final public func prepareUpdate(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Update
+  final public func prepareUpdate(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Update
+}
+extension WCDB.Table : WCDB.TableRowSelectChainCallInterface {
+  final public func prepareRowSelect(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., isDistinct: Swift.Bool = false) throws -> WCDB.RowSelect
+  final public func prepareRowSelect(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], isDistinct: Swift.Bool = false) throws -> WCDB.RowSelect
+}
+extension WCDB.Table : WCDB.TableSelectChainCallInterface {
+  final public func prepareSelect<Root>(of cls: Root.Type, isDistinct: Swift.Bool = false) throws -> WCDB.Select where Root : WCDB.TableDecodable
+  final public func prepareSelect(on propertyConvertibleList: WCDB.PropertyConvertible..., isDistinct: Swift.Bool = false) throws -> WCDB.Select
+  final public func prepareSelect(on propertyConvertibleList: [WCDB.PropertyConvertible], isDistinct: Swift.Bool = false) throws -> WCDB.Select
+}
+@_hasMissingDesignatedInitializers final public class StatementCommit : WCDB.Identifier<WCDB_Private.CPPStatementCommit>, WCDB.Statement {
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MultiSelect : WCDB.Selectable {
+  final public func nextMultiObject() throws -> [Swift.String : Any]?
+  final public func allMultiObjects() throws -> [[Swift.String : Any]]
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementUpdate : WCDB.Identifier<WCDB_Private.CPPStatementUpdate>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: WCDB.CommonTableExpression...) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: [WCDB.CommonTableExpression]) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func update(table qualifiedTableConvertible: WCDB.QualifiedTableConvertible) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func onConflict(_ conflict: WCDB.ConflictAction? = nil) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func set(_ columnConvertibleList: WCDB.ColumnConvertible...) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func set(_ columnConvertibleList: [WCDB.ColumnConvertible]) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func to(_ value: WCDB.ExpressionConvertible) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func `where`(_ condition: WCDB.ExpressionConvertible) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func order(by orderConvertibleList: WCDB.OrderingTermConvertible...) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func order(by orderConvertibleList: [WCDB.OrderingTermConvertible]) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func limit(from expressionConvertibleFrom: WCDB.ExpressionConvertible, to expressionConvertibleTo: WCDB.ExpressionConvertible) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func limit(_ expressionConvertibleLimit: WCDB.ExpressionConvertible) -> WCDB.StatementUpdate
+  @discardableResult
+  final public func offset(_ expressionConvertibleOffset: WCDB.ExpressionConvertible) -> WCDB.StatementUpdate
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Update {
+  final public let statement: WCDB.StatementUpdate
+  final public var changes: Swift.Int?
+  @discardableResult
+  final public func `where`(_ condition: WCDB.Condition) -> WCDB.Update
+  @discardableResult
+  final public func order(by orderList: WCDB.OrderBy...) -> WCDB.Update
+  @discardableResult
+  final public func order(by orderList: [WCDB.OrderBy]) -> WCDB.Update
+  @discardableResult
+  final public func limit(from begin: WCDB.Limit, to end: WCDB.Limit) -> WCDB.Update
+  @discardableResult
+  final public func limit(_ limit: WCDB.Limit) -> WCDB.Update
+  @discardableResult
+  final public func limit(_ limit: WCDB.Limit, offset: WCDB.Offset) -> WCDB.Update
+  final public func execute<Object>(with object: Object) throws where Object : WCDB.TableEncodable
+  final public func execute(with row: [WCDB.ColumnEncodable?]) throws
+  @objc deinit
+}
+public protocol RowSelectInterface : AnyObject {
+  func getRows(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.MultiRowsValue
+  func getRows(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.MultiRowsValue
+  func getRow(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> WCDB.OneRowValue
+  func getRow(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> WCDB.OneRowValue
+  func getColumn(on resultColumnConvertible: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.OneColumnValue
+  func getDistinctColumn(on resultColumnConvertible: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.OneColumnValue
+  func getValue(on resultColumnConvertible: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.Value
+  func getDistinctValue(on result: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> WCDB.Value
+}
+extension WCDB.RowSelectInterface where Self : WCDB.HandleRepresentable {
+  public func getRows(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.MultiRowsValue
+  public func getRows(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.MultiRowsValue
+  public func getRow(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneRowValue
+  public func getRow(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneRowValue
+  public func getColumn(on result: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneColumnValue
+  public func getDistinctColumn(on result: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.OneColumnValue
+  public func getValue(on result: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Value
+  public func getDistinctValue(on result: WCDB.ResultColumnConvertible, fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> WCDB.Value
+}
+public protocol SelectInterface : AnyObject {
+  func getObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Object] where Object : WCDB.TableDecodable
+  func getObjects<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Object] where Object : WCDB.TableDecodable
+  func getObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Object? where Object : WCDB.TableDecodable
+  func getObject<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Object? where Object : WCDB.TableDecodable
+}
+extension WCDB.SelectInterface where Self : WCDB.HandleRepresentable {
+  public func getObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [Object] where Object : WCDB.TableDecodable
+  public func getObjects<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws -> [Object] where Object : WCDB.TableDecodable
+  public func getObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> Object? where Object : WCDB.TableDecodable
+  public func getObject<Object>(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, offset: WCDB.Offset? = nil) throws -> Object? where Object : WCDB.TableDecodable
+}
+@_hasMissingDesignatedInitializers final public class StatementDropTrigger : WCDB.Identifier<WCDB_Private.CPPStatementDropTrigger>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func drop(trigger: Swift.String) -> WCDB.StatementDropTrigger
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementDropTrigger
+  @discardableResult
+  final public func ifExists() -> WCDB.StatementDropTrigger
+  @objc deinit
+}
+public enum Order {
+  case ascending
+  case descending
+  public static func == (a: WCDB.Order, b: WCDB.Order) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ConflictAction {
+  case Replace
+  case Rollback
+  case Abort
+  case Fail
+  case Ignore
+  public static func == (a: WCDB.ConflictAction, b: WCDB.ConflictAction) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ColumnType {
+  case integer32
+  case integer64
+  case text
+  case float
+  case BLOB
+  case null
+  public static func == (a: WCDB.ColumnType, b: WCDB.ColumnType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TransactionType {
+  case deferred
+  case immediate
+  case exclusive
+  public static func == (a: WCDB.TransactionType, b: WCDB.TransactionType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum FTSVersion : WCDB.Describable {
+  case FTS3
+  case FTS4
+  case FTS5
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: WCDB.FTSVersion, b: WCDB.FTSVersion) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol StatementSelectInterface : AnyObject {
+  func getValue(from statement: WCDB.Statement) throws -> WCDB.Value?
+  func getColumn(from statement: WCDB.Statement) throws -> WCDB.OneColumnValue
+  func getRow(from statement: WCDB.Statement) throws -> WCDB.OneRowValue?
+  func getRows(from statement: WCDB.Statement) throws -> WCDB.MultiRowsValue
+}
+extension WCDB.StatementSelectInterface where Self : WCDB.HandleRepresentable {
+  public func getValue(from statement: WCDB.Statement) throws -> WCDB.Value?
+  public func getColumn(from statement: WCDB.Statement) throws -> WCDB.OneColumnValue
+  public func getRow(from statement: WCDB.Statement) throws -> WCDB.OneRowValue?
+  public func getRows(from statement: WCDB.Statement) throws -> WCDB.MultiRowsValue
+}
+extension WCDB.Database {
+  public func getTable<Root>(named name: Swift.String, of type: Root.Type = Root.self) -> WCDB.Table<Root> where Root : WCDB.WCTTableCoding
+}
+extension WCDB.Database : WCDB.InsertChainCallInterfaceForObjc {
+}
+extension WCDB.Database : WCDB.SelectChainCallInterfaceForObjc {
+}
+extension WCDB.Database : WCDB.InsertInterfaceForObjc {
+}
+extension WCDB.Database : WCDB.UpdateInterfaceForObjc {
+}
+extension WCDB.Database : WCDB.SelectInterfaceForObjc {
+}
+extension WCDB.Database : WCDB.TableInterfaceForObjc {
+}
+@_hasMissingDesignatedInitializers final public class StatementReindex : WCDB.Identifier<WCDB_Private.CPPStatementReIndex>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func reindex(collation: Swift.String) -> WCDB.StatementReindex
+  @discardableResult
+  final public func reindex(table: Swift.String) -> WCDB.StatementReindex
+  @discardableResult
+  final public func reindex(index: Swift.String) -> WCDB.StatementReindex
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementReindex
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementCreateIndex : WCDB.Identifier<WCDB_Private.CPPStatementCreateIndex>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func create(index: Swift.String, isUnique: Swift.Bool = false) -> WCDB.StatementCreateIndex
+  @discardableResult
+  final public func unique() -> WCDB.StatementCreateIndex
+  @discardableResult
+  final public func ifNotExists() -> WCDB.StatementCreateIndex
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementCreateIndex
+  @discardableResult
+  final public func on(table: Swift.String) -> WCDB.StatementCreateIndex
+  @discardableResult
+  final public func indexesBy(_ indexedColumnConvertibleList: WCDB.IndexedColumnConvertible...) -> WCDB.StatementCreateIndex
+  @discardableResult
+  final public func indexesBy(_ indexedColumnConvertibleList: [WCDB.IndexedColumnConvertible]) -> WCDB.StatementCreateIndex
+  @discardableResult
+  final public func `where`(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.StatementCreateIndex
+  @objc deinit
+}
+public protocol InsertTableInterfaceForObjc : AnyObject {
+  associatedtype Object : WCDB.WCTTableCoding
+  func insert(_ objects: Self.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insert(_ objects: [Self.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrReplace(_ objects: Self.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrReplace(_ objects: [Self.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrIgnore(_ objects: Self.Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+  func insertOrIgnore(_ objects: [Self.Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?) throws
+}
+public protocol UpdateTableInterfaceForObjc : AnyObject {
+  associatedtype Object : WCDB.WCTTableCoding
+  func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with object: Self.Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with object: Self.Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(on propertyConvertibleList: WCDB.PropertyConvertible..., with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+  func update(on propertyConvertibleList: [WCDB.PropertyConvertible], with row: [WCDB.ColumnEncodable], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+}
+public protocol SelectTableInterfaceForObjc : AnyObject {
+  associatedtype Object : WCDB.WCTTableCoding
+  func getObjects(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Self.Object]
+  func getObjects(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws -> [Self.Object]
+  func getObject(on propertyConvertibleList: [WCDB.PropertyConvertible], where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Self.Object?
+  func getObject(on propertyConvertibleList: WCDB.PropertyConvertible..., where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, offset: WCDB.Offset?) throws -> Self.Object?
+}
+@_hasMissingDesignatedInitializers final public class StatementCreateTable : WCDB.Identifier<WCDB_Private.CPPStatementCreateTable>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func create(table: Swift.String, isTemp: Swift.Bool = false) -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func ifNotExists() -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func `as`(_ select: WCDB.StatementSelect) -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func with(columns: WCDB.ColumnDef...) -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func with(columns: [WCDB.ColumnDef]) -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func constraint(_ constraints: WCDB.TableConstraint...) -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func constraint(_ constraints: [WCDB.TableConstraint]? = nil) -> WCDB.StatementCreateTable
+  @discardableResult
+  final public func withoutRowid() -> WCDB.StatementCreateTable
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Pragma : WCDB.Identifier<WCDB_Private.CPPPragma> {
+  public init(named name: Swift.String)
+  public static let applicationId: WCDB.Pragma
+  public static let autoVacuum: WCDB.Pragma
+  public static let automaticIndex: WCDB.Pragma
+  public static let busyTimeout: WCDB.Pragma
+  public static let cacheSize: WCDB.Pragma
+  public static let cacheSpill: WCDB.Pragma
+  public static let caseSensitiveLike: WCDB.Pragma
+  public static let cellSizeCheck: WCDB.Pragma
+  public static let checkpointFullfsync: WCDB.Pragma
+  public static let cipher: WCDB.Pragma
+  public static let cipherAddRandom: WCDB.Pragma
+  public static let cipherDefaultKdfIter: WCDB.Pragma
+  public static let cipherDefaultPageSize: WCDB.Pragma
+  public static let cipherDefaultUseHmac: WCDB.Pragma
+  public static let cipherMigrate: WCDB.Pragma
+  public static let cipherProfile: WCDB.Pragma
+  public static let cipherProvider: WCDB.Pragma
+  public static let cipherProviderVersion: WCDB.Pragma
+  public static let cipherUseHmac: WCDB.Pragma
+  public static let cipherVersion: WCDB.Pragma
+  public static let cipherPageSize: WCDB.Pragma
+  public static let cipherSalt: WCDB.Pragma
+  public static let cipherPlainTextHeaderSize: WCDB.Pragma
+  public static let collationList: WCDB.Pragma
+  public static let compileOptions: WCDB.Pragma
+  public static let countChanges: WCDB.Pragma
+  public static let dataStoreDirectory: WCDB.Pragma
+  public static let dataVersion: WCDB.Pragma
+  public static let databaseList: WCDB.Pragma
+  public static let defaultCacheSize: WCDB.Pragma
+  public static let deferForeignKeys: WCDB.Pragma
+  public static let emptyResultCallbacks: WCDB.Pragma
+  public static let encoding: WCDB.Pragma
+  public static let foreignKeyCheck: WCDB.Pragma
+  public static let foreignKeyList: WCDB.Pragma
+  public static let foreignKeys: WCDB.Pragma
+  public static let freelistCount: WCDB.Pragma
+  public static let fullColumnNames: WCDB.Pragma
+  public static let fullfsync: WCDB.Pragma
+  public static let ignoreCheckConstraints: WCDB.Pragma
+  public static let incrementalVacuum: WCDB.Pragma
+  public static let indexInfo: WCDB.Pragma
+  public static let indexList: WCDB.Pragma
+  public static let indexXinfo: WCDB.Pragma
+  public static let integrityCheck: WCDB.Pragma
+  public static let journalMode: WCDB.Pragma
+  public static let journalSizeLimit: WCDB.Pragma
+  public static let key: WCDB.Pragma
+  public static let kdfIter: WCDB.Pragma
+  public static let legacyFileFormat: WCDB.Pragma
+  public static let lockingMode: WCDB.Pragma
+  public static let maxPageCount: WCDB.Pragma
+  public static let mmapSize: WCDB.Pragma
+  public static let pageCount: WCDB.Pragma
+  public static let pageSize: WCDB.Pragma
+  public static let parserTrace: WCDB.Pragma
+  public static let queryOnly: WCDB.Pragma
+  public static let quickCheck: WCDB.Pragma
+  public static let readUncommitted: WCDB.Pragma
+  public static let recursiveTriggers: WCDB.Pragma
+  public static let rekey: WCDB.Pragma
+  public static let reverseUnorderedSelects: WCDB.Pragma
+  public static let schemaVersion: WCDB.Pragma
+  public static let secureDelete: WCDB.Pragma
+  public static let shortColumnNames: WCDB.Pragma
+  public static let shrinkMemory: WCDB.Pragma
+  public static let softHeapLimit: WCDB.Pragma
+  public static let stats: WCDB.Pragma
+  public static let synchronous: WCDB.Pragma
+  public static let tableInfo: WCDB.Pragma
+  public static let tempStore: WCDB.Pragma
+  public static let tempStoreDirectory: WCDB.Pragma
+  public static let threads: WCDB.Pragma
+  public static let userVersion: WCDB.Pragma
+  public static let vdbeAddoptrace: WCDB.Pragma
+  public static let vdbeDebug: WCDB.Pragma
+  public static let vdbeListing: WCDB.Pragma
+  public static let vdbeTrace: WCDB.Pragma
+  public static let walAutocheckpoint: WCDB.Pragma
+  public static let walCheckpoint: WCDB.Pragma
+  public static let writableSchema: WCDB.Pragma
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class QualifiedTable : WCDB.Identifier<WCDB_Private.CPPQualifiedTable> {
+  public init(with name: Swift.String)
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.QualifiedTable
+  @discardableResult
+  final public func `as`(_ alias: Swift.String) -> WCDB.QualifiedTable
+  @discardableResult
+  final public func indexed(by indexName: Swift.String) -> WCDB.QualifiedTable
+  @discardableResult
+  final public func notIndexed() -> WCDB.QualifiedTable
+  @objc deinit
+}
+extension WCDB.QualifiedTable : WCDB.QualifiedTableConvertible {
+  final public func asQualifiedTable() -> WCDB.QualifiedTable
+}
+extension Swift.String : WCDB.QualifiedTableConvertible {
+  public func asQualifiedTable() -> WCDB.QualifiedTable
+}
+public protocol TableInterface : AnyObject {
+  func create<Root>(table name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.TableDecodable
+  func create<Root>(virtualTable name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.TableDecodable
+  func create(table name: Swift.String, with columnDefList: [WCDB.ColumnDef], and constraintList: [WCDB.TableConstraint]?) throws
+  func create(table name: Swift.String, with columnDefList: WCDB.ColumnDef..., and constraintList: [WCDB.TableConstraint]?) throws
+  func getTable<Root>(named name: Swift.String, of type: Root.Type) -> WCDB.Table<Root> where Root : WCDB.TableDecodable, Root : WCDB.TableEncodable
+  func isTableExists(_ table: Swift.String) throws -> Swift.Bool
+  func addColumn(with columnDef: WCDB.ColumnDef, forTable table: Swift.String) throws
+  func drop(table name: Swift.String) throws
+  func create(index name: Swift.String, with indexedColumnConvertibleList: [WCDB.IndexedColumnConvertible], forTable table: Swift.String) throws
+  func create(index name: Swift.String, with indexedColumnConvertibleList: WCDB.IndexedColumnConvertible..., forTable table: Swift.String) throws
+  func drop(index name: Swift.String) throws
+}
+extension WCDB.TableInterface where Self : WCDB.HandleRepresentable {
+  public func create<Root>(table name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.TableDecodable
+  public func create<Root>(virtualTable name: Swift.String, of rootType: Root.Type) throws where Root : WCDB.TableDecodable
+  public func create(table name: Swift.String, with columnDefList: WCDB.ColumnDef..., and constraintList: [WCDB.TableConstraint]? = nil) throws
+  public func create(table name: Swift.String, with columnDefList: [WCDB.ColumnDef], and constraintList: [WCDB.TableConstraint]? = nil) throws
+  public func getTable<Root>(named name: Swift.String, of type: Root.Type = Root.self) -> WCDB.Table<Root> where Root : WCDB.TableDecodable, Root : WCDB.TableEncodable
+  public func isTableExists(_ table: Swift.String) throws -> Swift.Bool
+  public func addColumn(with columnDef: WCDB.ColumnDef, forTable table: Swift.String) throws
+  public func drop(table name: Swift.String) throws
+  public func create(index name: Swift.String, with indexedColumnConvertibleList: WCDB.IndexedColumnConvertible..., forTable table: Swift.String) throws
+  public func create(index name: Swift.String, with indexedColumnConvertibleList: [WCDB.IndexedColumnConvertible], forTable table: Swift.String) throws
+  public func drop(index name: Swift.String) throws
+}
+public protocol InsertChainCallInterface : AnyObject {
+  func prepareInsert<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  func prepareInsertOrReplace<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  func prepareInsertOrIgnore<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  func prepareInsert(on propertyConvertibleList: WCDB.PropertyConvertible..., intoTable table: Swift.String) throws -> WCDB.Insert
+  func prepareInsertOrReplace(on propertyConvertibleList: WCDB.PropertyConvertible..., intoTable table: Swift.String) throws -> WCDB.Insert
+  func prepareInsertOrIgnore(on propertyConvertibleList: WCDB.PropertyConvertible..., intoTable table: Swift.String) throws -> WCDB.Insert
+  func prepareInsert(on propertyConvertibleList: [WCDB.PropertyConvertible], intoTable table: Swift.String) throws -> WCDB.Insert
+  func prepareInsertOrReplace(on propertyConvertibleList: [WCDB.PropertyConvertible], intoTable table: Swift.String) throws -> WCDB.Insert
+  func prepareInsertOrIgnore(on propertyConvertibleList: [WCDB.PropertyConvertible], intoTable table: Swift.String) throws -> WCDB.Insert
+}
+extension WCDB.InsertChainCallInterface where Self : WCDB.HandleRepresentable {
+  public func prepareInsert<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  public func prepareInsertOrReplace<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  public func prepareInsertOrIgnore<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  public func prepareInsert(on propertyConvertibleList: WCDB.PropertyConvertible..., intoTable table: Swift.String) throws -> WCDB.Insert
+  public func prepareInsertOrReplace(on propertyConvertibleList: WCDB.PropertyConvertible..., intoTable table: Swift.String) throws -> WCDB.Insert
+  public func prepareInsertOrIgnore(on propertyConvertibleList: WCDB.PropertyConvertible..., intoTable table: Swift.String) throws -> WCDB.Insert
+  public func prepareInsert(on propertyConvertibleList: [WCDB.PropertyConvertible], intoTable table: Swift.String) throws -> WCDB.Insert
+  public func prepareInsertOrReplace(on propertyConvertibleList: [WCDB.PropertyConvertible], intoTable table: Swift.String) throws -> WCDB.Insert
+  public func prepareInsertOrIgnore(on propertyConvertibleList: [WCDB.PropertyConvertible], intoTable table: Swift.String) throws -> WCDB.Insert
+}
+public protocol DeleteChainCallInterface : AnyObject {
+  func prepareDelete(fromTable table: Swift.String) throws -> WCDB.Delete
+}
+extension WCDB.DeleteChainCallInterface where Self : WCDB.HandleRepresentable {
+  public func prepareDelete(fromTable table: Swift.String) throws -> WCDB.Delete
+}
+public protocol UpdateChainCallInterface : AnyObject {
+  func prepareUpdate(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Update
+  func prepareUpdate(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Update
+}
+extension WCDB.UpdateChainCallInterface where Self : WCDB.HandleRepresentable {
+  public func prepareUpdate(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Update
+  public func prepareUpdate(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Update
+}
+public protocol RowSelectChainCallInterface : AnyObject {
+  func prepareRowSelect(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTables tables: [Swift.String], isDistinct: Swift.Bool) throws -> WCDB.RowSelect
+  func prepareRowSelect(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTables tables: [Swift.String], isDistinct: Swift.Bool) throws -> WCDB.RowSelect
+  func prepareRowSelect(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTable table: Swift.String, isDistinct: Swift.Bool) throws -> WCDB.RowSelect
+  func prepareRowSelect(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTable table: Swift.String, isDistinct: Swift.Bool) throws -> WCDB.RowSelect
+}
+extension WCDB.RowSelectChainCallInterface where Self : WCDB.HandleRepresentable {
+  public func prepareRowSelect(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTables tables: [Swift.String], isDistinct: Swift.Bool = false) throws -> WCDB.RowSelect
+  public func prepareRowSelect(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTables tables: [Swift.String], isDistinct: Swift.Bool = false) throws -> WCDB.RowSelect
+  public func prepareRowSelect(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., fromTable table: Swift.String, isDistinct: Swift.Bool = false) throws -> WCDB.RowSelect
+  public func prepareRowSelect(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], fromTable table: Swift.String, isDistinct: Swift.Bool = false) throws -> WCDB.RowSelect
+}
+public protocol SelectChainCallInterface : AnyObject {
+  func prepareSelect<Root>(of cls: Root.Type, fromTable table: Swift.String, isDistinct: Swift.Bool) throws -> WCDB.Select where Root : WCDB.TableDecodable
+  func prepareSelect(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, isDistinct: Swift.Bool) throws -> WCDB.Select
+  func prepareSelect(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, isDistinct: Swift.Bool) throws -> WCDB.Select
+}
+extension WCDB.SelectChainCallInterface where Self : WCDB.HandleRepresentable {
+  public func prepareSelect<Root>(of cls: Root.Type, fromTable table: Swift.String, isDistinct: Swift.Bool = false) throws -> WCDB.Select where Root : WCDB.TableDecodable
+  public func prepareSelect(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTable table: Swift.String, isDistinct: Swift.Bool = false) throws -> WCDB.Select
+  public func prepareSelect(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTable table: Swift.String, isDistinct: Swift.Bool = false) throws -> WCDB.Select
+}
+public protocol MultiSelectChainCallInterface : AnyObject {
+  func prepareMultiSelect(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTables tables: [Swift.String]) throws -> WCDB.MultiSelect
+  func prepareMultiSelect(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTables tables: [Swift.String]) throws -> WCDB.MultiSelect
+}
+extension WCDB.MultiSelectChainCallInterface where Self : WCDB.HandleRepresentable {
+  public func prepareMultiSelect(on propertyConvertibleList: WCDB.PropertyConvertible..., fromTables tables: [Swift.String]) throws -> WCDB.MultiSelect
+  public func prepareMultiSelect(on propertyConvertibleList: [WCDB.PropertyConvertible], fromTables tables: [Swift.String]) throws -> WCDB.MultiSelect
+}
+@_hasMissingDesignatedInitializers final public class FrameSpec : WCDB.Identifier<WCDB_Private.CPPFrameSpec> {
+  public init()
+  @discardableResult
+  final public func range() -> WCDB.FrameSpec
+  @discardableResult
+  final public func rows() -> WCDB.FrameSpec
+  @discardableResult
+  final public func unboundedPreceding() -> WCDB.FrameSpec
+  @discardableResult
+  final public func preceding(_ expressionConverable: WCDB.ExpressionConvertible) -> WCDB.FrameSpec
+  @discardableResult
+  final public func currentRow() -> WCDB.FrameSpec
+  @discardableResult
+  final public func betweenUnboundedPreceding() -> WCDB.FrameSpec
+  @discardableResult
+  final public func betweenPreceding(_ expressionConverable: WCDB.ExpressionConvertible) -> WCDB.FrameSpec
+  @discardableResult
+  final public func betweenCurrentRow() -> WCDB.FrameSpec
+  @discardableResult
+  final public func betweenFollowing(_ expressionConverable: WCDB.ExpressionConvertible) -> WCDB.FrameSpec
+  @discardableResult
+  final public func andCurrentRow() -> WCDB.FrameSpec
+  @discardableResult
+  final public func andPreceding(_ expressionConverable: WCDB.ExpressionConvertible) -> WCDB.FrameSpec
+  @discardableResult
+  final public func andUnboundedFollowing() -> WCDB.FrameSpec
+  @discardableResult
+  final public func andFollowing(_ expressionConverable: WCDB.ExpressionConvertible) -> WCDB.FrameSpec
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Filter : WCDB.Identifier<WCDB_Private.CPPFilter> {
+  public init()
+  @discardableResult
+  final public func `where`(_ condition: WCDB.ExpressionConvertible) -> WCDB.Filter
+  @objc deinit
+}
+public protocol Statement : AnyObject, Swift.CustomStringConvertible {
+  var rawCPPObj: Swift.UnsafeMutablePointer<WCDB_Private.CPPObject> { get }
+}
+@_hasMissingDesignatedInitializers final public class WindowDef : WCDB.Identifier<WCDB_Private.CPPWindowDef> {
+  public init()
+  @discardableResult
+  final public func partition(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.WindowDef
+  @discardableResult
+  final public func partition(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.WindowDef
+  @discardableResult
+  final public func order(_ orderConvertibleList: WCDB.OrderingTermConvertible...) -> WCDB.WindowDef
+  @discardableResult
+  final public func order(_ orderConvertibleList: [WCDB.OrderingTermConvertible]) -> WCDB.WindowDef
+  @discardableResult
+  final public func frameSpec(_ frameSpec: WCDB.FrameSpec) -> WCDB.WindowDef
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Upsert : WCDB.Identifier<WCDB_Private.CPPUpsert> {
+  public init()
+  @discardableResult
+  final public func onConflict() -> WCDB.Upsert
+  @discardableResult
+  final public func indexed(by indexedColumnConvertibleList: WCDB.IndexedColumnConvertible...) -> WCDB.Upsert
+  @discardableResult
+  final public func indexed(by indexedColumnConvertibleList: [WCDB.IndexedColumnConvertible]) -> WCDB.Upsert
+  @discardableResult
+  final public func `where`(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Upsert
+  @discardableResult
+  final public func doNothing() -> WCDB.Upsert
+  @discardableResult
+  final public func doUpdate() -> WCDB.Upsert
+  @discardableResult
+  final public func set(_ columnConvertible: WCDB.ColumnConvertible...) -> WCDB.Upsert
+  @discardableResult
+  final public func set(_ columnConvertible: [WCDB.ColumnConvertible]) -> WCDB.Upsert
+  @discardableResult
+  final public func to(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Upsert
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementAlterTable : WCDB.Identifier<WCDB_Private.CPPStatementAlterTable>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func alter(table: Swift.String) -> WCDB.StatementAlterTable
+  @discardableResult
+  final public func schema(_ schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementAlterTable
+  @discardableResult
+  final public func rename(to newTable: Swift.String) -> WCDB.StatementAlterTable
+  final public func rename(column columnConvertible: WCDB.ColumnConvertible, to newColumnConvertible: WCDB.ColumnConvertible) -> WCDB.StatementAlterTable
+  @discardableResult
+  final public func addColumn(with columnDef: WCDB.ColumnDef) -> WCDB.StatementAlterTable
+  @objc deinit
+}
+public typealias Condition = WCDB.ExpressionConvertible
+public typealias Limit = WCDB.ExpressionConvertible
+public typealias Offset = WCDB.ExpressionConvertible
+public typealias GroupBy = WCDB.ExpressionConvertible
+public typealias Having = WCDB.ExpressionConvertible
+public typealias OrderBy = WCDB.OrderingTermConvertible
+final public class CheckExpressionConfig : WCDB.TableConfiguration {
+  final public func config(with tableBinding: WCDB.TableBindingBase)
+  public init(@WCDB.CheckExpressionConfig.CheckExpressionBuilder _ constraintBuilder: () -> [WCDB.TableConstraint])
+  @_functionBuilder public struct CheckExpressionBuilder {
+    public static func buildBlock() -> [WCDB.TableConstraint]
+    public static func buildBlock(_ enums: WCDB.Expression...) -> [WCDB.TableConstraint]
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Select : WCDB.Selectable {
+  final public func nextObject() throws -> Any?
+  final public func allObjects() throws -> [Any]
+  final public func nextObject<Object>(of type: Object.Type = Object.self) throws -> Object? where Object : WCDB.TableDecodable
+  final public func allObjects<Object>(of type: Object.Type = Object.self) throws -> [Object] where Object : WCDB.TableDecodable
+  @objc deinit
+}
+public protocol InsertInterface : AnyObject {
+  func insert<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  func insert<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  func insertOrReplace<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  func insertOrReplace<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  func insertOrIgnore<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  func insertOrIgnore<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+}
+extension WCDB.InsertInterface where Self : WCDB.HandleRepresentable {
+  public func insert<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  public func insertOrReplace<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  public func insertOrIgnore<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  public func insert<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  public func insertOrReplace<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+  public func insertOrIgnore<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.TableEncodable
+}
+final public class ColumnConstraintConfig<CodingTableKeyType> : WCDB.TableConfiguration where CodingTableKeyType : WCDB.CodingTableKey {
+  final public func config(with tableBinding: WCDB.TableBindingBase)
+  required public init(_ codingKey: CodingTableKeyType, isPrimary: Swift.Bool = false, orderBy term: WCDB.Order? = nil, isAutoIncrement: Swift.Bool = false, onConflict conflict: WCDB.ConflictAction? = nil, isNotNull: Swift.Bool = false, isUnique: Swift.Bool = false, defaultTo defaultValue: WCDB.LiteralValue? = nil, isNotIndexed: Swift.Bool = false)
+  convenience public init<T>(_ codingKey: CodingTableKeyType, isPrimary: Swift.Bool = false, orderBy term: WCDB.Order? = nil, isAutoIncrement: Swift.Bool = false, onConflict conflict: WCDB.ConflictAction? = nil, isNotNull: Swift.Bool = false, isUnique: Swift.Bool = false, defaultTo defaultEncodedValue: T, isNotIndexed: Swift.Bool = false) where T : WCDB.ColumnEncodable
+  @objc deinit
+}
+extension WCDB.Update {
+  final public func execute<Object>(with object: Object) throws where Object : WCDB.WCTTableCoding
+}
+@_hasMissingDesignatedInitializers final public class StatementSelect : WCDB.Identifier<WCDB_Private.CPPStatementSelect>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: WCDB.CommonTableExpression...) -> WCDB.StatementSelect
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: [WCDB.CommonTableExpression]) -> WCDB.StatementSelect
+  @discardableResult
+  final public func select(distinct: Swift.Bool = false, _ resultColumnConvertibleList: WCDB.ResultColumnConvertible...) -> WCDB.StatementSelect
+  @discardableResult
+  final public func select(distinct: Swift.Bool = false, _ resultColumnConvertibleList: [WCDB.ResultColumnConvertible]) -> WCDB.StatementSelect
+  @discardableResult
+  final public func from(_ tableOrSubqueryConvertibleList: WCDB.TableOrSubqueryConvertible...) -> WCDB.StatementSelect
+  @discardableResult
+  final public func from(_ tableOrSubqueryConvertibleList: [WCDB.TableOrSubqueryConvertible]) -> WCDB.StatementSelect
+  @discardableResult
+  final public func `where`(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.StatementSelect
+  @discardableResult
+  final public func group(by expressionConvertibleGroupList: WCDB.ExpressionConvertible...) -> WCDB.StatementSelect
+  @discardableResult
+  final public func group(by expressionConvertibleGroupList: [WCDB.ExpressionConvertible]) -> WCDB.StatementSelect
+  @discardableResult
+  final public func having(_ expressionConvertibleHaving: WCDB.ExpressionConvertible) -> WCDB.StatementSelect
+  @discardableResult
+  final public func order(by orderConvertibleList: WCDB.OrderingTermConvertible...) -> WCDB.StatementSelect
+  @discardableResult
+  final public func order(by orderConvertibleList: [WCDB.OrderingTermConvertible]) -> WCDB.StatementSelect
+  @discardableResult
+  final public func limit(from expressionConvertibleFrom: WCDB.ExpressionConvertible, to expressionConvertibleTo: WCDB.ExpressionConvertible) -> WCDB.StatementSelect
+  @discardableResult
+  final public func limit(_ expressionConvertibleLimit: WCDB.ExpressionConvertible) -> WCDB.StatementSelect
+  @discardableResult
+  final public func offset(_ expressionConvertibleOffset: WCDB.ExpressionConvertible) -> WCDB.StatementSelect
+  @discardableResult
+  final public func union() -> WCDB.StatementSelect
+  @discardableResult
+  final public func unionAll() -> WCDB.StatementSelect
+  @discardableResult
+  final public func intersect() -> WCDB.StatementSelect
+  @discardableResult
+  final public func except() -> WCDB.StatementSelect
+  @discardableResult
+  final public func window(_ name: Swift.String) -> WCDB.StatementSelect
+  @discardableResult
+  final public func `as`(_ windowDef: WCDB.WindowDef) -> WCDB.StatementSelect
+  @discardableResult
+  final public func value(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.StatementSelect
+  @discardableResult
+  final public func value(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.StatementSelect
+  @objc deinit
+}
+extension WCDB.StatementSelect : WCDB.ExpressionConvertible, WCDB.TableOrSubqueryConvertible {
+  final public func asExpression() -> WCDB.Expression
+  final public func asTableOrSubquery() -> WCDB.TableOrSubquery
+}
+@_hasMissingDesignatedInitializers final public class StatementVacuum : WCDB.Identifier<WCDB_Private.CPPStatementVacuum>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func vacuum(schema schemaConvertible: WCDB.SchemaConvertible? = nil) -> WCDB.StatementVacuum
+  @objc deinit
+}
+public protocol TableInsertChainCallInterfaceForObjc : AnyObject {
+  func prepareInsert<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  func prepareInsertOrReplace<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  func prepareInsertOrIgnore<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+}
+public protocol TableSelectChainCallInterfaceForObjc : AnyObject {
+  func prepareSelect<Root>(of cls: Root.Type, isDistinct: Swift.Bool) throws -> WCDB.Select where Root : WCDB.WCTTableCoding
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class LiteralValue : WCDB.Identifier<WCDB_Private.CPPLiteralValue> {
+  convenience public init(_ value: Swift.Int32)
+  convenience public init(_ value: Swift.Int64)
+  convenience public init(_ value: Swift.Bool)
+  convenience public init(_ value: Swift.Double)
+  convenience public init(_ value: Swift.String)
+  convenience public init(_ value: Foundation.Data)
+  convenience public init(_ value: Swift.Void?)
+  convenience public init(_ value: WCDB.Value)
+  convenience public init<T>(_ encodedValue: T) where T : WCDB.ColumnEncodable
+  public static func currentTime() -> WCDB.LiteralValue
+  public static func currentDate() -> WCDB.LiteralValue
+  public static func currentTimestamp() -> WCDB.LiteralValue
+  @objc deinit
+}
+extension WCDB.LiteralValue : Swift.ExpressibleByNilLiteral {
+  convenience public init(nilLiteral: ())
+}
+extension WCDB.LiteralValue : Swift.ExpressibleByIntegerLiteral {
+  convenience public init(integerLiteral value: Swift.Int)
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension WCDB.LiteralValue : Swift.ExpressibleByBooleanLiteral {
+  convenience public init(booleanLiteral value: Swift.Bool)
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension WCDB.LiteralValue : Swift.ExpressibleByFloatLiteral {
+  convenience public init(floatLiteral value: Swift.Double)
+  public typealias FloatLiteralType = Swift.Double
+}
+extension WCDB.LiteralValue : Swift.ExpressibleByStringLiteral {
+  convenience public init(stringLiteral value: Swift.String)
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias StringLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension WCDB.LiteralValue : WCDB.LiteralValueConvertible {
+  final public func asLiteralValue() -> WCDB.LiteralValue
+}
+@_hasMissingDesignatedInitializers final public class StatementAttach : WCDB.Identifier<WCDB_Private.CPPStatementAttach>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func attach(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.StatementAttach
+  @discardableResult
+  final public func `as`(_ schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementAttach
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class Expression : WCDB.Identifier<WCDB_Private.CPPExpression> {
+  convenience public init(with literalValueConvertible: WCDB.LiteralValueConvertible)
+  convenience public init(with bindParameter: WCDB.BindParameter)
+  convenience public init(with columnConvertible: WCDB.ColumnConvertible)
+  convenience public init(with statementSelect: WCDB.StatementSelect)
+  convenience public init(with raiseFunc: WCDB.RaiseFunction)
+  public static func function(_ name: Swift.String) -> WCDB.Expression
+  @discardableResult
+  final public func schema(_ schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Expression
+  @discardableResult
+  final public func distinct() -> WCDB.Expression
+  @discardableResult
+  final public func arguments(_ expressionConvertibleList: [WCDB.ExpressionConvertible]) -> WCDB.Expression
+  @discardableResult
+  final public func arguments(_ expressionConvertibleList: WCDB.ExpressionConvertible...) -> WCDB.Expression
+  @discardableResult
+  final public func invoke() -> WCDB.Expression
+  @discardableResult
+  final public func invokeAll() -> WCDB.Expression
+  public static func cast(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Expression
+  @discardableResult
+  final public func `as`(_ type: WCDB.ColumnType) -> WCDB.Expression
+  public static func `case`(_ expressionConvertible: WCDB.ExpressionConvertible? = nil) -> WCDB.Expression
+  @discardableResult
+  final public func when(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Expression
+  @discardableResult
+  final public func then(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Expression
+  @discardableResult
+  final public func `else`(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Expression
+  @discardableResult
+  final public func escape(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public static func windowFunction(_ funcName: Swift.String) -> WCDB.Expression
+  @discardableResult
+  final public func filter(_ filter: WCDB.Filter) -> WCDB.Expression
+  @discardableResult
+  final public func over(_ window: WCDB.WindowDef) -> WCDB.Expression
+  @discardableResult
+  final public func over(_ window: Swift.String) -> WCDB.Expression
+  @objc deinit
+}
+extension WCDB.Expression : Swift.ExpressibleByNilLiteral {
+  convenience public init(nilLiteral value: ())
+}
+extension WCDB.Expression : Swift.ExpressibleByBooleanLiteral {
+  convenience public init(booleanLiteral value: Swift.Bool)
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension WCDB.Expression : Swift.ExpressibleByIntegerLiteral {
+  convenience public init(integerLiteral value: Swift.Int)
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension WCDB.Expression : Swift.ExpressibleByFloatLiteral {
+  convenience public init(floatLiteral value: Swift.Double)
+  public typealias FloatLiteralType = Swift.Double
+}
+extension WCDB.Expression : Swift.ExpressibleByStringLiteral {
+  convenience public init(stringLiteral value: Swift.String)
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias StringLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension WCDB.Expression : WCDB.ExpressionOperable {
+  public static func exists(_ select: WCDB.StatementSelect) -> WCDB.Expression
+  public static func notExists(_ select: WCDB.StatementSelect) -> WCDB.Expression
+  public static func `case`(_ expressionConvertible: WCDB.ExpressionConvertible, _ flows: (when: WCDB.ExpressionConvertible, then: WCDB.ExpressionConvertible)..., else: WCDB.ExpressionConvertible) -> WCDB.Expression
+  public static func `case`(_ case: WCDB.ExpressionConvertible, _ flows: [(when: WCDB.ExpressionConvertible, then: WCDB.ExpressionConvertible)], else: WCDB.ExpressionConvertible) -> WCDB.Expression
+  final public func asExpression() -> WCDB.Expression
+}
+public protocol InsertChainCallInterfaceForObjc : AnyObject {
+  func prepareInsert<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  func prepareInsertOrReplace<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  func prepareInsertOrIgnore<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+}
+extension WCDB.InsertChainCallInterfaceForObjc where Self : WCDB.HandleRepresentable {
+  public func prepareInsert<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  public func prepareInsertOrReplace<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+  public func prepareInsertOrIgnore<Root>(of cls: Root.Type, intoTable table: Swift.String) throws -> WCDB.Insert where Root : WCDB.WCTTableCoding
+}
+public protocol SelectChainCallInterfaceForObjc : AnyObject {
+  func prepareSelect<Root>(of cls: Root.Type, fromTable table: Swift.String, isDistinct: Swift.Bool) throws -> WCDB.Select where Root : WCDB.WCTTableCoding
+}
+extension WCDB.SelectChainCallInterfaceForObjc where Self : WCDB.HandleRepresentable {
+  public func prepareSelect<Root>(of cls: Root.Type, fromTable table: Swift.String, isDistinct: Swift.Bool = false) throws -> WCDB.Select where Root : WCDB.WCTTableCoding
+}
+@_hasMissingDesignatedInitializers final public class TableConstraint : WCDB.Identifier<WCDB_Private.CPPTableConstraint> {
+  public init(named name: Swift.String? = nil)
+  @discardableResult
+  final public func primaryKey() -> WCDB.TableConstraint
+  @discardableResult
+  final public func unique() -> WCDB.TableConstraint
+  @discardableResult
+  final public func indexed(by indexedColumnConvertibleList: WCDB.IndexedColumnConvertible...) -> WCDB.TableConstraint
+  @discardableResult
+  final public func indexed(by indexedColumnConvertibleList: [WCDB.IndexedColumnConvertible]) -> WCDB.TableConstraint
+  @discardableResult
+  final public func onConflict(_ conflict: WCDB.ConflictAction) -> WCDB.TableConstraint
+  @discardableResult
+  final public func check(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.TableConstraint
+  @discardableResult
+  final public func foreignKey(_ columnConvertibleList: WCDB.ColumnConvertible..., foreignKey: WCDB.ForeignKey) -> WCDB.TableConstraint
+  @discardableResult
+  final public func foreignKey(_ columnConvertibleList: [WCDB.ColumnConvertible], foreignKey: WCDB.ForeignKey) -> WCDB.TableConstraint
+  @objc deinit
+}
+public protocol StatementInterface : AnyObject {
+  func finalize()
+  @discardableResult
+  func step() throws -> Swift.Bool
+  func reset() throws
+  var isReadOnly: Swift.Bool { get }
+  func bind<TableEncodableType>(_ propertyConvertible: WCDB.PropertyConvertible, of object: TableEncodableType, toIndex index: Swift.Int) throws where TableEncodableType : WCDB.TableEncodable
+  func bind<TableEncodableType>(_ indexedPropertyConvertibleList: [(WCDB.PropertyConvertible, toIndex: Swift.Int)], of object: TableEncodableType) throws where TableEncodableType : WCDB.TableEncodable
+  func bind<TableEncodableType>(_ propertyConvertibleList: [WCDB.PropertyConvertible], of object: TableEncodableType) throws where TableEncodableType : WCDB.TableEncodable
+  func bind(_ value: WCDB.ColumnEncodable?, toIndex index: Swift.Int)
+  func bind(_ value: WCDB.Value, toIndex index: Swift.Int)
+  func bind(_ value: Swift.Int32, toIndex index: Swift.Int)
+  func bind(_ value: Swift.Int64, toIndex index: Swift.Int)
+  func bind(_ value: Swift.Double, toIndex index: Swift.Int)
+  func bind(_ value: Swift.String, toIndex index: Swift.Int)
+  func bind(_ value: Foundation.Data, toIndex index: Swift.Int)
+  func value(atIndex index: Swift.Int, of type: WCDB.ColumnDecodable.Type) -> WCDB.ColumnDecodable?
+  func value<ColumnDecodableType>(byName name: Swift.String, of type: ColumnDecodableType.Type) -> ColumnDecodableType? where ColumnDecodableType : WCDB.ColumnDecodable
+  func value(atIndex index: Swift.Int) -> WCDB.Value
+  func oneRowValue() -> WCDB.OneRowValue
+  func oneColumnValue(atIndex index: Swift.Int) throws -> WCDB.OneColumnValue
+  func multiRowsValue() throws -> WCDB.MultiRowsValue
+  func extractObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]?, of type: Object.Type) throws -> Object where Object : WCDB.TableDecodable
+  func extractAllObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]?, of type: Object.Type) throws -> [Object] where Object : WCDB.TableDecodable
+  func index(byName name: Swift.String) -> Swift.Int?
+  func indexOf(bindParameter: Swift.String) -> Swift.Int
+  func columnValue(atIndex index: Swift.Int) -> Swift.Int32
+  func columnValue(atIndex index: Swift.Int, of type: Swift.Int32.Type) -> Swift.Int32
+  func columnValue(atIndex index: Swift.Int) -> Swift.Int64
+  func columnValue(atIndex index: Swift.Int, of type: Swift.Int64.Type) -> Swift.Int64
+  func columnValue(atIndex index: Swift.Int) -> Swift.Double
+  func columnValue(atIndex index: Swift.Int, of type: Swift.Double.Type) -> Swift.Double
+  func columnValue(atIndex index: Swift.Int) -> Swift.String
+  func columnValue(atIndex index: Swift.Int, of type: Swift.String.Type) -> Swift.String
+  func columnValue(atIndex index: Swift.Int) -> Foundation.Data
+  func columnValue(atIndex index: Swift.Int, of type: Foundation.Data.Type) -> Foundation.Data
+  func columnCount() -> Swift.Int
+  func columnName(atIndex index: Swift.Int) -> Swift.String
+  func columnType(byName name: Swift.String) -> WCDB.ColumnType
+  func columnType(atIndex index: Swift.Int) -> WCDB.ColumnType
+  func originalColumnName(atIndex index: Swift.Int) -> Swift.String
+  func columnTableName(atIndex index: Swift.Int) -> Swift.String
+}
+extension WCDB.StatementInterface where Self : WCDB.RawStatementmentRepresentable {
+  public func finalize()
+  @discardableResult
+  public func step() throws -> Swift.Bool
+  public func reset()
+  public var isReadOnly: Swift.Bool {
+    get
+  }
+  public func bind<TableEncodableType>(_ propertyConvertible: WCDB.PropertyConvertible, of object: TableEncodableType, toIndex index: Swift.Int = 1) throws where TableEncodableType : WCDB.TableEncodable
+  public func bind<TableEncodableType>(_ indexedPropertyConvertibleList: [(WCDB.PropertyConvertible, toIndex: Swift.Int)], of object: TableEncodableType) throws where TableEncodableType : WCDB.TableEncodable
+  public func bind<TableEncodableType>(_ propertyConvertibleList: [WCDB.PropertyConvertible], of object: TableEncodableType) throws where TableEncodableType : WCDB.TableEncodable
+  public func bind(_ value: WCDB.ColumnEncodable?, toIndex index: Swift.Int)
+  public func bind(_ value: WCDB.Value, toIndex index: Swift.Int)
+  public func bind(_ value: Swift.Int32, toIndex index: Swift.Int)
+  public func bind(_ value: Swift.Int64, toIndex index: Swift.Int)
+  public func bind(_ value: Swift.Double, toIndex index: Swift.Int)
+  public func bind(_ value: Swift.String, toIndex index: Swift.Int)
+  public func bind(_ value: Foundation.Data, toIndex index: Swift.Int)
+  public func value(atIndex index: Swift.Int, of type: WCDB.ColumnDecodable.Type) -> WCDB.ColumnDecodable?
+  public func value<ColumnDecodableType>(atIndex index: Swift.Int, of type: ColumnDecodableType.Type = ColumnDecodableType.self) -> ColumnDecodableType? where ColumnDecodableType : WCDB.ColumnDecodable
+  public func value(atIndex index: Swift.Int) -> WCDB.Value
+  public func value<ColumnDecodableType>(byName name: Swift.String, of type: ColumnDecodableType.Type = ColumnDecodableType.self) -> ColumnDecodableType? where ColumnDecodableType : WCDB.ColumnDecodable
+  public func oneRowValue() -> WCDB.OneRowValue
+  public func oneColumnValue(atIndex index: Swift.Int) throws -> WCDB.OneColumnValue
+  public func multiRowsValue() throws -> WCDB.MultiRowsValue
+  public func extractObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, of type: Object.Type = Object.self) throws -> Object where Object : WCDB.TableDecodable
+  public func extractAllObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, of type: Object.Type = Object.self) throws -> [Object] where Object : WCDB.TableDecodable
+  public func index(byName name: Swift.String) -> Swift.Int?
+  public func indexOf(bindParameter: Swift.String) -> Swift.Int
+  public func columnValue(atIndex index: Swift.Int) -> Swift.Int32
+  public func columnValue(atIndex index: Swift.Int, of type: Swift.Int32.Type = Int32.self) -> Swift.Int32
+  public func columnValue(atIndex index: Swift.Int) -> Swift.Int64
+  public func columnValue(atIndex index: Swift.Int, of type: Swift.Int64.Type = Int64.self) -> Swift.Int64
+  public func columnValue(atIndex index: Swift.Int) -> Swift.Double
+  public func columnValue(atIndex index: Swift.Int, of type: Swift.Double.Type = Double.self) -> Swift.Double
+  public func columnValue(atIndex index: Swift.Int) -> Swift.String
+  public func columnValue(atIndex index: Swift.Int, of type: Swift.String.Type = String.self) -> Swift.String
+  public func columnValue(atIndex index: Swift.Int) -> Foundation.Data
+  public func columnValue(atIndex index: Swift.Int, of type: Foundation.Data.Type = Data.self) -> Foundation.Data
+  public func columnCount() -> Swift.Int
+  public func columnName(atIndex index: Swift.Int) -> Swift.String
+  public func columnType(byName name: Swift.String) -> WCDB.ColumnType
+  public func columnType(atIndex index: Swift.Int) -> WCDB.ColumnType
+  public func originalColumnName(atIndex index: Swift.Int) -> Swift.String
+  public func columnTableName(atIndex index: Swift.Int) -> Swift.String
+}
+@_hasMissingDesignatedInitializers final public class StatementAnalyze : WCDB.Identifier<WCDB_Private.CPPStatementAnalyze>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func analyze() -> WCDB.StatementAnalyze
+  @discardableResult
+  final public func schema(_ schemaConcertable: WCDB.SchemaConvertible) -> WCDB.StatementAnalyze
+  @discardableResult
+  final public func table(_ name: Swift.String) -> WCDB.StatementAnalyze
+  @discardableResult
+  final public func index(_ name: Swift.String) -> WCDB.StatementAnalyze
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementBegin : WCDB.Identifier<WCDB_Private.CPPStatementBegin>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func begin(_ transactionType: WCDB.TransactionType) -> WCDB.StatementBegin
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Handle {
+  final public func exec(_ statement: WCDB.Statement) throws
+  final public func getOrCreatePreparedStatement(with statement: WCDB.Statement) throws -> WCDB.PreparedStatement
+  final public func finalizeAllStatement()
+  final public var changes: Swift.Int {
+    get
+  }
+  final public var totalChanges: Swift.Int {
+    get
+  }
+  final public var lastInsertedRowID: Swift.Int64 {
+    get
+  }
+  final public class CancellatiionSignal {
+    public init()
+    final public func cancel()
+    @objc deinit
+  }
+  final public func attach(cancellationSignal: WCDB.Handle.CancellatiionSignal)
+  final public func detachCancellationSignal()
+  @objc deinit
+}
+public protocol HandleRepresentable {
+  func getHandle() throws -> WCDB.Handle
+  func getDatabase() -> WCDB.Database
+}
+extension WCDB.Handle : WCDB.HandleRepresentable {
+  final public func getHandle() throws -> WCDB.Handle
+  final public func getDatabase() -> WCDB.Database
+}
+extension WCDB.Handle : WCDB.RawStatementmentRepresentable {
+  final public func finalizeWhenError() -> Swift.Bool
+  final public func getRawStatement() -> WCDB_Private.CPPHandleStatement
+  final public func prepare(_ statement: WCDB.Statement) throws
+  final public var isPrepared: Swift.Bool {
+    get
+  }
+}
+extension WCDB.Handle : WCDB.StatementInterface {
+}
+extension WCDB.Handle : WCDB.InsertChainCallInterface {
+}
+extension WCDB.Handle : WCDB.UpdateChainCallInterface {
+}
+extension WCDB.Handle : WCDB.DeleteChainCallInterface {
+}
+extension WCDB.Handle : WCDB.RowSelectChainCallInterface {
+}
+extension WCDB.Handle : WCDB.SelectChainCallInterface {
+}
+extension WCDB.Handle : WCDB.MultiSelectChainCallInterface {
+}
+extension WCDB.Handle : WCDB.InsertInterface {
+}
+extension WCDB.Handle : WCDB.UpdateInterface {
+}
+extension WCDB.Handle : WCDB.DeleteInterface {
+}
+extension WCDB.Handle : WCDB.RowSelectInterface {
+}
+extension WCDB.Handle : WCDB.SelectInterface {
+}
+extension WCDB.Handle : WCDB.StatementSelectInterface {
+}
+extension WCDB.Handle : WCDB.TableInterface {
+}
+extension WCDB.Handle : WCDB.TransactionInterface {
+}
+@_hasMissingDesignatedInitializers final public class IndexedColumn : WCDB.Identifier<WCDB_Private.CPPIndexedColumn> {
+  public init(with columnConvertible: WCDB.ColumnConvertible)
+  public init(with expressionConvertible: WCDB.ExpressionConvertible)
+  @discardableResult
+  final public func order(_ order: WCDB.Order) -> WCDB.IndexedColumn
+  @discardableResult
+  final public func collate(_ collation: Swift.String) -> WCDB.IndexedColumn
+  @objc deinit
+}
+extension WCDB.IndexedColumn : WCDB.IndexedColumnConvertible {
+  final public func asIndex() -> WCDB.IndexedColumn
+}
+@_hasMissingDesignatedInitializers final public class CommonTableExpression : WCDB.Identifier<WCDB_Private.CPPCommonTableExpression> {
+  public init(_ table: Swift.String)
+  @discardableResult
+  final public func column(_ columnConvertible: WCDB.ColumnConvertible) -> WCDB.CommonTableExpression
+  @discardableResult
+  final public func `as`(_ select: WCDB.StatementSelect) -> WCDB.CommonTableExpression
+  @objc deinit
+}
+public protocol OptionalRepresentable {
+  associatedtype WrappedType
+  static var `nil`: Self { get }
+}
+extension Swift.Optional : WCDB.OptionalRepresentable {
+  public static var `nil`: Wrapped? {
+    get
+  }
+  public typealias WrappedType = Wrapped
+}
+@_hasMissingDesignatedInitializers final public class RowSelect : WCDB.Selectable {
+  final public func nextRow() throws -> WCDB.OneRowValue?
+  final public func allRows() throws -> WCDB.MultiRowsValue
+  final public func nextValue() throws -> WCDB.Value?
+  final public func allValues() throws -> WCDB.OneColumnValue
+  @objc deinit
+}
+public protocol TableInsertChainCallInterface : AnyObject {
+  func prepareInsert<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  func prepareInsertOrReplace<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  func prepareInsertOrIgnore<Root>(of cls: Root.Type) throws -> WCDB.Insert where Root : WCDB.TableEncodable
+  func prepareInsert(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Insert
+  func prepareInsertOrReplace(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Insert
+  func prepareInsertOrIgnore(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Insert
+  func prepareInsert(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Insert
+  func prepareInsertOrReplace(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Insert
+  func prepareInsertOrIgnore(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Insert
+}
+public protocol TableDeleteChainCallInterface : AnyObject {
+  func prepareDelete() throws -> WCDB.Delete
+}
+public protocol TableUpdateChainCallInterface : AnyObject {
+  func prepareUpdate(on propertyConvertibleList: WCDB.PropertyConvertible...) throws -> WCDB.Update
+  func prepareUpdate(on propertyConvertibleList: [WCDB.PropertyConvertible]) throws -> WCDB.Update
+}
+public protocol TableRowSelectChainCallInterface : AnyObject {
+  func prepareRowSelect(on resultColumnConvertibleList: WCDB.ResultColumnConvertible..., isDistinct: Swift.Bool) throws -> WCDB.RowSelect
+  func prepareRowSelect(on resultColumnConvertibleList: [WCDB.ResultColumnConvertible], isDistinct: Swift.Bool) throws -> WCDB.RowSelect
+}
+public protocol TableSelectChainCallInterface : AnyObject {
+  func prepareSelect<Root>(of cls: Root.Type, isDistinct: Swift.Bool) throws -> WCDB.Select where Root : WCDB.TableDecodable
+  func prepareSelect(on propertyConvertibleList: WCDB.PropertyConvertible..., isDistinct: Swift.Bool) throws -> WCDB.Select
+  func prepareSelect(on propertyConvertibleList: [WCDB.PropertyConvertible], isDistinct: Swift.Bool) throws -> WCDB.Select
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class ColumnDef : WCDB.Identifier<WCDB_Private.CPPColumnDef> {
+  convenience public init(with columnConvertible: WCDB.ColumnConvertible, and optionalType: WCDB.ColumnType? = nil)
+  final public func addConstraint(_ constraint: WCDB.ColumnConstraint)
+  @discardableResult
+  final public func makePrimary(orderBy order: WCDB.Order? = nil, isAutoIncrement: Swift.Bool? = false, onConflict conflict: WCDB.ConflictAction? = nil) -> WCDB.ColumnDef
+  @discardableResult
+  final public func makeDefault(to defaultValue: WCDB.ExpressionConvertible) -> WCDB.ColumnDef
+  @discardableResult
+  final public func makeNotNull() -> WCDB.ColumnDef
+  @discardableResult
+  final public func makeUnique() -> WCDB.ColumnDef
+  @discardableResult
+  final public func makeForeignKey(_ foreignKey: WCDB.ForeignKey) -> WCDB.ColumnDef
+  @discardableResult
+  final public func makeNotIndexed() -> WCDB.ColumnDef
+  @objc deinit
+}
+public protocol StatementInterfaceForObjc {
+  func bind<TableEncodableType>(_ propertyConvertible: WCDB.PropertyConvertible, of object: TableEncodableType, toIndex index: Swift.Int) throws where TableEncodableType : WCDB.WCTTableCoding
+  func bind<TableEncodableType>(_ indexedPropertyConvertibleList: [(WCDB.PropertyConvertible, toIndex: Swift.Int)], of object: TableEncodableType) throws where TableEncodableType : WCDB.WCTTableCoding
+  func bind<TableEncodableType>(_ propertyConvertibleList: [WCDB.PropertyConvertible], of object: TableEncodableType) throws where TableEncodableType : WCDB.WCTTableCoding
+  func extractObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]?, of type: Object.Type) -> Object where Object : WCDB.WCTTableCoding
+  func extractAllObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]?, of type: Object.Type) throws -> [Object] where Object : WCDB.WCTTableCoding
+}
+extension WCDB.StatementInterfaceForObjc where Self : WCDB.RawStatementmentRepresentable {
+  public func bind<TableEncodableType>(_ propertyConvertible: WCDB.PropertyConvertible, of object: TableEncodableType, toIndex index: Swift.Int = 1) throws where TableEncodableType : WCDB.WCTTableCoding
+  public func bind<TableEncodableType>(_ indexedPropertyConvertibleList: [(WCDB.PropertyConvertible, toIndex: Swift.Int)], of object: TableEncodableType) throws where TableEncodableType : WCDB.WCTTableCoding
+  public func bind<TableEncodableType>(_ propertyConvertibleList: [WCDB.PropertyConvertible], of object: TableEncodableType) throws where TableEncodableType : WCDB.WCTTableCoding
+  public func extractObject<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, of type: Object.Type = Object.self) -> Object where Object : WCDB.WCTTableCoding
+  public func extractAllObjects<Object>(on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, of type: Object.Type = Object.self) throws -> [Object] where Object : WCDB.WCTTableCoding
+}
+@_hasMissingDesignatedInitializers public class Database {
+  convenience public init(at path: Swift.String)
+  convenience public init(at url: Foundation.URL)
+  public var tag: WCDB.Tag? {
+    get
+    set
+  }
+  final public var path: Swift.String {
+    get
+  }
+  public var canOpen: Swift.Bool {
+    get
+  }
+  public var isOpened: Swift.Bool {
+    get
+  }
+  public var isBlockaded: Swift.Bool {
+    get
+  }
+  public typealias OnClosed = () throws -> Swift.Void
+  public func close(onClosed: @escaping WCDB.Database.OnClosed) throws
+  public func close()
+  public func blockade()
+  public func unblockade()
+  public func purge()
+  public static func purge()
+  public func getHandle() throws -> WCDB.Handle
+  public func getDatabase() -> WCDB.Database
+  public func exec(_ statement: WCDB.Statement) throws
+  @objc deinit
+}
+extension WCDB.Database {
+  public enum CipherVersion : Swift.Int32 {
+    case defaultVerion
+    case version1
+    case version2
+    case version3
+    case version4
+    public init?(rawValue: Swift.Int32)
+    public typealias RawValue = Swift.Int32
+    public var rawValue: Swift.Int32 {
+      get
+    }
+  }
+  public func setCipher(key optionalKey: Foundation.Data?, pageSize: Swift.Int = 4096, cipherVersion: WCDB.Database.CipherVersion = .defaultVerion)
+  public static func setDefaultCipherConfiguration(_ version: WCDB.Database.CipherVersion)
+  public static func setDefaultTemporaryDirectory(_ directory: Swift.String) -> Swift.Bool
+  public typealias PerformanceTracer = (WCDB.Tag, Swift.String, Swift.UInt64, Swift.String, Swift.Double) -> Swift.Void
+  public typealias SQLTracer = (WCDB.Tag, Swift.String, Swift.UInt64, Swift.String) -> Swift.Void
+  public static func globalTrace(ofPerformance trace: @escaping WCDB.Database.PerformanceTracer)
+  public static func globalTrace(ofPerformance: Swift.Void?)
+  public func trace(ofPerformance trace: @escaping WCDB.Database.PerformanceTracer)
+  public func trace(ofPerformance: Swift.Void?)
+  public static func globalTrace(ofSQL trace: @escaping WCDB.Database.SQLTracer)
+  public static func globalTrace(ofSQL: Swift.Void?)
+  public func trace(ofSQL trace: @escaping WCDB.Database.SQLTracer)
+  public func trace(ofSQL: Swift.Void?)
+  public static func globalTrace(ofError errorReporter: @escaping (WCDB.WCDBError) -> Swift.Void)
+  public static func globalTrace(ofError: Swift.Void?)
+  public func trace(ofError errorReporter: @escaping (WCDB.WCDBError) -> Swift.Void)
+  public func trace(ofError: Swift.Void?)
+  public enum Operation : Swift.Int {
+    case Create
+    case SetTag
+    case OpenHandle
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public typealias OperationTracer = (WCDB.Database, WCDB.Database.Operation) -> Swift.Void
+  public static func globalTrace(ofDatabaseOperation trace: @escaping WCDB.Database.OperationTracer)
+  public static func globalTrace(ofDatabaseOperation trace: Swift.Void?)
+  public enum ConfigPriority : Swift.Int32 {
+    case highest
+    case high
+    case `default`
+    case low
+    public init?(rawValue: Swift.Int32)
+    public typealias RawValue = Swift.Int32
+    public var rawValue: Swift.Int32 {
+      get
+    }
+  }
+  public typealias Config = (WCDB.Handle) throws -> Swift.Void
+  public func setConfig(named name: Swift.String, withInvocation invocation: @escaping WCDB.Database.Config, withUninvocation uninvocation: WCDB.Database.Config? = nil, withPriority priority: WCDB.Database.ConfigPriority = ConfigPriority.default)
+}
+extension WCDB.Database {
+  public var urls: [Foundation.URL] {
+    get
+  }
+  public var paths: [Swift.String] {
+    get
+  }
+  public func removeFiles() throws
+  public func moveFiles(toDirectory directory: Swift.String) throws
+  public func getFilesSize() throws -> Swift.UInt64
+}
+extension WCDB.Database {
+  public typealias OnCorrupted = (_ corruptedDatabase: WCDB.Database) -> Swift.Void
+  public func setNotification(whenCorrupted callback: WCDB.Database.OnCorrupted?)
+  public func checkIfCorrupted() -> Swift.Bool
+  public func isAlreadyCorrupted() -> Swift.Bool
+  public func setAutoBackup(enable flag: Swift.Bool)
+  public func backup() throws
+  public typealias BackupFiilter = (_ tableName: Swift.String) -> Swift.Bool
+  public func filterBackup(tableShouldBeBackedUp filter: WCDB.Database.BackupFiilter?)
+  public typealias RetrieveProgress = (_ percentage: Swift.Double, _ increment: Swift.Double) -> Swift.Void
+  public func retrieve(with progress: WCDB.Database.RetrieveProgress?) -> Swift.Double
+  public func deposit() throws
+  public func containDepositedFiles() -> Swift.Bool
+  public func removeDepositedFiles() throws
+}
+extension WCDB.Database {
+  public struct MigrationInfo {
+    public var database: Swift.String
+    public var table: Swift.String
+    public var sourceDatabase: Swift.String?
+    public var sourceTable: Swift.String?
+  }
+  public typealias MigrationFilter = (_ info: inout WCDB.Database.MigrationInfo) -> Swift.Void
+  public func filterMigration(_ filter: WCDB.Database.MigrationFilter?)
+  public func stepMigration() throws
+  public func setAutoMigration(enable flag: Swift.Bool)
+  public func isMigrated() -> Swift.Bool
+  public typealias MigratedCallback = (_ database: WCDB.Database, _ tableInfo: WCDB.Database.MigrationInfo?) -> Swift.Void
+  public func setNotification(whenMigrated callback: WCDB.Database.MigratedCallback?)
+}
+public struct BuiltinTokenizer {
+  public static let Simple: Swift.String
+  public static let Porter: Swift.String
+  public static let ICU: Swift.String
+  public static let Unicode61: Swift.String
+  public static let OneOrBinary: Swift.String
+  public static let Verbatim: Swift.String
+  public static let Pinyin: Swift.String
+  public struct Parameter {
+    public static let NeedSymbol: Swift.String
+    public static let SimplifyChinese: Swift.String
+    public static let SkipStemming: Swift.String
+  }
+}
+public struct BuiltinAuxiliaryFunction {
+  public static let SubstringMatchInfo: Swift.String
+}
+extension WCDB.Database {
+  public func setAutoMergeFTS5Index(enable: Swift.Bool)
+  public func add(tokenizer: Swift.String)
+  public static func register<TokenizerType>(tokenizer: TokenizerType.Type, of name: Swift.String, of version: WCDB.FTSVersion) where TokenizerType : WCDB.Tokenizer
+  public func add(auxFunction: Swift.String)
+  public static func config(pinyinDict: [Swift.String : [Swift.String]])
+  public static func config(traditionalChineseDict: [Swift.String : Swift.String])
+}
+extension WCDB.Database {
+  public func passiveCheckpoint() throws
+  public func truncateCheckpoint() throws
+}
+extension WCDB.Database : WCDB.HandleRepresentable {
+}
+extension WCDB.Database : WCDB.InsertChainCallInterface {
+}
+extension WCDB.Database : WCDB.UpdateChainCallInterface {
+}
+extension WCDB.Database : WCDB.DeleteChainCallInterface {
+}
+extension WCDB.Database : WCDB.RowSelectChainCallInterface {
+}
+extension WCDB.Database : WCDB.SelectChainCallInterface {
+}
+extension WCDB.Database : WCDB.MultiSelectChainCallInterface {
+}
+extension WCDB.Database : WCDB.InsertInterface {
+}
+extension WCDB.Database : WCDB.UpdateInterface {
+}
+extension WCDB.Database : WCDB.DeleteInterface {
+}
+extension WCDB.Database : WCDB.RowSelectInterface {
+}
+extension WCDB.Database : WCDB.SelectInterface {
+}
+extension WCDB.Database : WCDB.StatementSelectInterface {
+}
+extension WCDB.Database : WCDB.TableInterface {
+}
+extension WCDB.Database : WCDB.TransactionInterface {
+}
+public protocol TableConfiguration {
+  func config(with tableBinding: WCDB.TableBindingBase)
+}
+public protocol OrderingTermConvertible {
+  func asOrder() -> WCDB.OrderingTerm
+  func order(_ order: WCDB.Order?) -> WCDB.OrderingTerm
+  func collate(_ collation: Swift.String) -> WCDB.OrderingTerm
+}
+public protocol SpecificColumnDefConvertible {
+  func asDef(with columnType: WCDB.ColumnType?) -> WCDB.ColumnDef
+}
+public protocol IndexedColumnConvertible {
+  func asIndex() -> WCDB.IndexedColumn
+}
+public protocol SpecificColumnIndexConvertible : WCDB.IndexedColumnConvertible {
+  func asIndex(orderBy term: WCDB.Order?) -> WCDB.IndexedColumn
+}
+extension WCDB.SpecificColumnIndexConvertible {
+  public func asIndex() -> WCDB.IndexedColumn
+}
+public protocol ResultColumnConvertible {
+  func asResultColumn() -> WCDB.ResultColumn
+}
+public protocol SchemaConvertible {
+  func asSchema() -> WCDB.Schema
+}
+public protocol QualifiedTableConvertible {
+  func asQualifiedTable() -> WCDB.QualifiedTable
+}
+public protocol TableOrSubqueryConvertible {
+  func asTableOrSubquery() -> WCDB.TableOrSubquery
+}
+public protocol ExpressionConvertible : WCDB.OrderingTermConvertible, WCDB.ResultColumnConvertible {
+  func asExpression() -> WCDB.Expression
+}
+extension WCDB.ExpressionConvertible {
+  public func asResultColumn() -> WCDB.ResultColumn
+  public func asOrder() -> WCDB.OrderingTerm
+  public func order(_ order: WCDB.Order?) -> WCDB.OrderingTerm
+  public func collate(_ collation: Swift.String) -> WCDB.OrderingTerm
+}
+public protocol ColumnConvertible : WCDB.ExpressionConvertible, WCDB.SpecificColumnDefConvertible, WCDB.SpecificColumnIndexConvertible {
+  func asColumn() -> WCDB.Column
+  func `in`(table: Swift.String) -> WCDB.Column
+  func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Column
+}
+extension WCDB.ColumnConvertible {
+  public func asExpression() -> WCDB.Expression
+  public func asIndex(orderBy term: WCDB.Order?) -> WCDB.IndexedColumn
+  public func asDef(with columnType: WCDB.ColumnType? = nil) -> WCDB.ColumnDef
+  public func `in`(table: Swift.String) -> WCDB.Column
+  public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Column
+}
+public protocol LiteralValueConvertible : WCDB.ExpressionConvertible {
+  func asLiteralValue() -> WCDB.LiteralValue
+}
+extension WCDB.LiteralValueConvertible {
+  public func asExpression() -> WCDB.Expression
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class Schema : WCDB.Identifier<WCDB_Private.CPPSchema> {
+  convenience public init(with name: Swift.String)
+  public static let main: WCDB.Schema
+  public static let temp: WCDB.Schema
+  @objc deinit
+}
+extension WCDB.Schema : WCDB.SchemaConvertible {
+  final public func asSchema() -> WCDB.Schema
+}
+extension Swift.String : WCDB.SchemaConvertible {
+  public func asSchema() -> WCDB.Schema
+}
+final public class MultiPrimaryConfig<CodingTableKeyType> : WCDB.TableConfiguration where CodingTableKeyType : WCDB.CodingTableKey {
+  final public func config(with tableBinding: WCDB.TableBindingBase)
+  required public init(_ indexes: WCDB.IndexedColumnConvertible..., onConflict conflict: WCDB.ConflictAction? = nil)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementCreateView : WCDB.Identifier<WCDB_Private.CPPStatementCreateView>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func create(view: Swift.String, isTemp: Swift.Bool = false) -> WCDB.StatementCreateView
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementCreateView
+  @discardableResult
+  final public func ifNotExists() -> WCDB.StatementCreateView
+  @discardableResult
+  final public func `as`(_ select: WCDB.StatementSelect) -> WCDB.StatementCreateView
+  final public func with(columns: WCDB.Column...) -> WCDB.StatementCreateView
+  final public func with(columns: [WCDB.Column]) -> WCDB.StatementCreateView
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class Delete {
+  final public let statement: WCDB.StatementDelete
+  final public var changes: Swift.Int?
+  @discardableResult
+  final public func `where`(_ condition: WCDB.Condition) -> WCDB.Delete
+  @discardableResult
+  final public func order(by orderList: WCDB.OrderBy...) -> WCDB.Delete
+  @discardableResult
+  final public func order(by orderList: [WCDB.OrderBy]) -> WCDB.Delete
+  @discardableResult
+  final public func limit(from begin: WCDB.Limit, to end: WCDB.Limit) -> WCDB.Delete
+  @discardableResult
+  final public func limit(_ limit: WCDB.Limit) -> WCDB.Delete
+  @discardableResult
+  final public func limit(_ limit: WCDB.Limit, offset: WCDB.Offset) -> WCDB.Delete
+  final public func execute() throws
+  @objc deinit
+}
+public struct ErrorValue {
+  public enum ErrorValueType {
+    case int
+    case double
+    case string
+    public static func == (a: WCDB.ErrorValue.ErrorValueType, b: WCDB.ErrorValue.ErrorValueType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public let type: WCDB.ErrorValue.ErrorValueType
+  public var intValue: Swift.Int {
+    get
+  }
+  public var stringValue: Swift.String {
+    get
+  }
+  public var doubleValue: Swift.Double {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class WCDBError : Swift.Error, Swift.CustomStringConvertible {
+  public enum Code : Swift.Int {
+    case OK
+    case Error
+    case Internal
+    case Permission
+    case Abort
+    case Busy
+    case Locked
+    case NoMemory
+    case Readonly
+    case Interrupt
+    case IOError
+    case Corrupt
+    case NotFound
+    case Full
+    case CantOpen
+    case `Protocol`
+    case Empty
+    case Schema
+    case Exceed
+    case Constraint
+    case Mismatch
+    case Misuse
+    case NoLargeFileSupport
+    case Authorization
+    case Format
+    case Range
+    case NotADatabase
+    case Notice
+    case Warning
+    case Row
+    case Done
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum ExtendCode : Swift.Int {
+    case ErrorMissingCollseq
+    case ErrorRetry
+    case ErrorSnapshot
+    case IOErrorRead
+    case IOErrorShortRead
+    case IOErrorWrite
+    case IOErrorFsync
+    case IOErrorDirFsync
+    case IOErrorTruncate
+    case IOErrorFstat
+    case IOErrorUnlock
+    case IOErrorRdlock
+    case IOErrorDelete
+    case IOErrorBlocked
+    case IOErrorNoMemory
+    case IOErrorAccess
+    case IOErrorCheckReservedLock
+    case IOErrorLock
+    case IOErrorClose
+    case IOErrorDirClose
+    case IOErrorShmOpen
+    case IOErrorShmSize
+    case IOErrorShmLock
+    case IOErrorShmMap
+    case IOErrorSeek
+    case IOErrorDeleteNoEntry
+    case IOErrorMmap
+    case IOErrorGetTempPath
+    case IOErrorConvPath
+    case IOErrorVnode
+    case IOErrorAuthorization
+    case IOErrorBeginAtomic
+    case IOErrorCommitAtomic
+    case IOErrorRollbackAtomic
+    case LockedSharedCache
+    case LockedVirtualTable
+    case BusyRecovery
+    case BusySnapshot
+    case CantOpenNoTempDir
+    case CantOpenIsDir
+    case CantOpenFullPath
+    case CantOpenConvPath
+    case CantOpenDirtyWal
+    case CorruptVirtualTable
+    case CorruptSequence
+    case ReadonlyRecovery
+    case ReadonlyCantLock
+    case ReadonlyRollback
+    case ReadonlyDatabaseMoved
+    case ReadonlyCantInit
+    case ReadonlyDirectory
+    case AbortRollback
+    case ConstraintCheck
+    case ConstraintCommitHook
+    case ConstraintForeignKey
+    case ConstraintFunction
+    case ConstraintNotNull
+    case ConstraintPrimaryKey
+    case ConstraintTrigger
+    case ConstraintUnique
+    case ConstraintVirtualTable
+    case ConstraintRowID
+    case NoticeRecoverWal
+    case NoticeRecoverRollback
+    case WarningAutoIndex
+    case AuthorizationUser
+    case OKLoadPermanently
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum Level : Swift.Int, Swift.CustomStringConvertible {
+    case Ignore
+    case Debug
+    case Warning
+    case Notice
+    case Error
+    case Fatal
+    public var description: Swift.String {
+      get
+    }
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum Key : Swift.Int, Swift.CustomStringConvertible {
+    case tag
+    case path
+    case type
+    case source
+    case SQL
+    case extendedCode
+    case message
+    case invalidKey
+    public var description: Swift.String {
+      get
+    }
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  final public let level: WCDB.WCDBError.Level
+  final public let code: WCDB.WCDBError.Code
+  public typealias Infos = [WCDB.WCDBError.Key : WCDB.ErrorValue]
+  final public let infos: WCDB.WCDBError.Infos
+  public typealias ExtInfos = [Swift.String : WCDB.ErrorValue]
+  final public let extInfos: WCDB.WCDBError.ExtInfos
+  final public var tag: WCDB.Tag? {
+    get
+  }
+  final public var extendedCode: WCDB.WCDBError.ExtendCode? {
+    get
+  }
+  final public var message: Swift.String? {
+    get
+  }
+  final public var sql: Swift.String? {
+    get
+  }
+  final public var path: Swift.String? {
+    get
+  }
+  final public var description: Swift.String {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementRelease : WCDB.Identifier<WCDB_Private.CPPStatementRelease>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func release(savepoint name: Swift.String) -> WCDB.StatementRelease
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementDropIndex : WCDB.Identifier<WCDB_Private.CPPStatementDropIndex>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func drop(index: Swift.String) -> WCDB.StatementDropIndex
+  @discardableResult
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.StatementDropIndex
+  @discardableResult
+  final public func ifExists() -> WCDB.StatementDropIndex
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class StatementDelete : WCDB.Identifier<WCDB_Private.CPPStatementDelete>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: WCDB.CommonTableExpression...) -> WCDB.StatementDelete
+  @discardableResult
+  final public func with(recursive: Swift.Bool = false, _ expList: [WCDB.CommonTableExpression]) -> WCDB.StatementDelete
+  @discardableResult
+  final public func delete(from qualifiedTableConvertible: WCDB.QualifiedTableConvertible) -> WCDB.StatementDelete
+  @discardableResult
+  final public func `where`(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.StatementDelete
+  @discardableResult
+  final public func order(by orderConvertibleList: WCDB.OrderingTermConvertible...) -> WCDB.StatementDelete
+  @discardableResult
+  final public func order(by orderConvertibleList: [WCDB.OrderingTermConvertible]) -> WCDB.StatementDelete
+  @discardableResult
+  final public func limit(from expressionConvertibleFrom: WCDB.ExpressionConvertible, to expressionConvertibleTo: WCDB.ExpressionConvertible) -> WCDB.StatementDelete
+  @discardableResult
+  final public func limit(_ expressionConvertibleLimit: WCDB.ExpressionConvertible) -> WCDB.StatementDelete
+  @discardableResult
+  final public func offset(_ expressionConvertibleOffset: WCDB.ExpressionConvertible) -> WCDB.StatementDelete
+  @objc deinit
+}
+public protocol DeleteInterface : AnyObject {
+  func delete(fromTable table: Swift.String, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws
+}
+extension WCDB.DeleteInterface where Self : WCDB.HandleRepresentable {
+  public func delete(fromTable table: Swift.String, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class BindParameter : WCDB.Identifier<WCDB_Private.CPPBindParameter> {
+  convenience public init(_ num: Swift.Int32)
+  convenience public init(_ name: Swift.String)
+  public static func at(named name: Swift.String) -> WCDB.BindParameter
+  public static func colon(named name: Swift.String) -> WCDB.BindParameter
+  public static func dollar(named name: Swift.String) -> WCDB.BindParameter
+  public static func bindParameters(_ num: Swift.Int) -> [WCDB.BindParameter]
+  @objc deinit
+}
+extension WCDB.BindParameter : WCDB.ExpressionConvertible {
+  final public func asExpression() -> WCDB.Expression
+}
+public enum TokenizerErrorCode {
+  case OK
+  case Done
+  case NoMemory
+  public static func == (a: WCDB.TokenizerErrorCode, b: WCDB.TokenizerErrorCode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol Tokenizer : AnyObject {
+  init(args: [Swift.String])
+  func load(input: Swift.UnsafePointer<Swift.Int8>?, length: Swift.Int, flags: Swift.Int)
+  func nextToken(ppToken: Swift.UnsafeMutablePointer<Swift.UnsafePointer<Swift.Int8>?>, pnBytes: Swift.UnsafeMutablePointer<Swift.Int32>, piStart: Swift.UnsafeMutablePointer<Swift.Int32>, piEnd: Swift.UnsafeMutablePointer<Swift.Int32>, pFlags: Swift.UnsafeMutablePointer<Swift.Int32>?, piPosition: Swift.UnsafeMutablePointer<Swift.Int32>?) -> WCDB.TokenizerErrorCode
+}
+@_hasMissingDesignatedInitializers final public class Join : WCDB.Identifier<WCDB_Private.CPPJoin> {
+  public init(with subqueryConvertible: WCDB.TableOrSubqueryConvertible)
+  @discardableResult
+  final public func join(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func with(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func leftOuterJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func leftJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func innerJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func crossJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func naturalJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func naturalLeftOuterJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func naturalLeftJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func naturalInnerJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func naturalCrossJoin(_ subqueryConvertible: WCDB.TableOrSubqueryConvertible) -> WCDB.Join
+  @discardableResult
+  final public func on(_ expressionConvertible: WCDB.ExpressionConvertible) -> WCDB.Join
+  @discardableResult
+  final public func using(_ columnConvertibleList: WCDB.ColumnConvertible...) -> WCDB.Join
+  @discardableResult
+  final public func using(_ columnConvertibleList: [WCDB.ColumnConvertible]) -> WCDB.Join
+  @objc deinit
+}
+extension WCDB.Join : WCDB.TableOrSubqueryConvertible {
+  final public func asTableOrSubquery() -> WCDB.TableOrSubquery
+}
+public protocol ColumnCodableBase {
+  static var columnType: WCDB.ColumnType { get }
+}
+public protocol ColumnEncodable : Swift.Encodable, WCDB.ColumnCodableBase {
+  func archivedValue() -> WCDB.Value
+}
+extension WCDB.ColumnEncodable where Self : WCDB.LiteralValueConvertible {
+  public func asLiteralValue() -> WCDB.LiteralValue
+}
+public protocol ColumnDecodable : Swift.Decodable, WCDB.ColumnCodableBase {
+  init?(with value: WCDB.Value)
+}
+public typealias ColumnCodable = WCDB.ColumnDecodable & WCDB.ColumnEncodable
+public protocol InsertInterfaceForObjc {
+  func insert<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  func insert<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  func insertOrReplace<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  func insertOrReplace<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  func insertOrIgnore<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  func insertOrIgnore<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]?, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+}
+extension WCDB.InsertInterfaceForObjc where Self : WCDB.HandleRepresentable {
+  public func insert<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  public func insertOrReplace<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  public func insertOrIgnore<Object>(_ objects: [Object], on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  public func insert<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  public func insertOrReplace<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+  public func insertOrIgnore<Object>(_ objects: Object..., on propertyConvertibleList: [WCDB.PropertyConvertible]? = nil, intoTable table: Swift.String) throws where Object : WCDB.WCTTableCoding
+}
+public protocol UpdateInterfaceForObjc : AnyObject {
+  func update<Object>(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with object: Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws where Object : WCDB.WCTTableCoding
+  func update<Object>(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with object: Object, where condition: WCDB.Condition?, orderBy orderList: [WCDB.OrderBy]?, limit: WCDB.Limit?, offset: WCDB.Offset?) throws where Object : WCDB.WCTTableCoding
+}
+extension WCDB.UpdateInterface where Self : WCDB.HandleRepresentable {
+  public func update<Object>(table: Swift.String, on propertyConvertibleList: [WCDB.PropertyConvertible], with object: Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws where Object : WCDB.WCTTableCoding
+  public func update<Object>(table: Swift.String, on propertyConvertibleList: WCDB.PropertyConvertible..., with object: Object, where condition: WCDB.Condition? = nil, orderBy orderList: [WCDB.OrderBy]? = nil, limit: WCDB.Limit? = nil, offset: WCDB.Offset? = nil) throws where Object : WCDB.WCTTableCoding
+}
+public class TableBindingBase {
+  public init()
+  @objc deinit
+}
+final public class TableBinding<CodingTableKeyType> : WCDB.TableBindingBase where CodingTableKeyType : WCDB.CodingTableKey {
+  public init(_ type: CodingTableKeyType.Type)
+  @_functionBuilder public struct TableConfigurationBuilder {
+    public static func buildBlock(_ configs: WCDB.TableConfiguration...) -> [WCDB.TableConfiguration]
+    public static func buildBlock() -> [WCDB.TableConfiguration]
+  }
+  convenience public init(_ type: CodingTableKeyType.Type, @WCDB.TableBinding<CodingTableKeyType>.TableConfigurationBuilder _ configBuilder: @escaping () -> [WCDB.TableConfiguration])
+  @objc deinit
+}
+extension Swift.Int8 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Int16 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Int32 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Int64 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Int : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.UInt8 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.UInt16 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.UInt32 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.UInt64 : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.UInt : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Bool : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Float : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Double : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.String : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Foundation.Data : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Foundation.Date : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Foundation.URL : WCDB.ColumnCodable, WCDB.LiteralValueConvertible {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+extension Swift.Array : WCDB.ColumnCodable, WCDB.ColumnCodableBase where Element : Swift.Decodable, Element : Swift.Encodable {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+public typealias FundamentalValue = WCDB.Value
+extension Swift.Dictionary : WCDB.ColumnCodable, WCDB.ColumnCodableBase where Key : Swift.Decodable, Key : Swift.Encodable, Value : Swift.Decodable, Value : Swift.Encodable {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.FundamentalValue)
+  public func archivedValue() -> WCDB.FundamentalValue
+}
+extension Swift.Set : WCDB.ColumnCodable, WCDB.ColumnCodableBase where Element : Swift.Decodable, Element : Swift.Encodable {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+  public init?(with value: WCDB.Value)
+  public func archivedValue() -> WCDB.Value
+}
+public protocol ColumnJSONEncodable : WCDB.ColumnEncodable {
+}
+extension WCDB.ColumnJSONEncodable {
+  public func archivedValue() -> WCDB.Value
+}
+public protocol ColumnJSONDecodable : WCDB.ColumnDecodable {
+}
+extension WCDB.ColumnJSONDecodable {
+  public init?(with value: WCDB.Value)
+}
+public protocol ColumnJSONCodable : WCDB.ColumnJSONDecodable, WCDB.ColumnJSONEncodable {
+}
+extension WCDB.ColumnJSONCodable {
+  public static var columnType: WCDB.ColumnType {
+    get
+  }
+}
+public protocol PropertyConvertible : WCDB.ColumnConvertible, WCDB.PropertyRedirectable {
+  func isSwiftProperty() -> Swift.Bool
+  var codingTableKey: WCDB.CodingTableKeyBase? { get }
+  var wctProperty: WCDB.WCTBridgeProperty? { get }
+  func asProperty() -> WCDB.Property
+  func `in`(table: Swift.String) -> WCDB.Property
+  func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Property
+}
+public typealias PropertyOperable = WCDB.PropertyConvertible & WCDB.ExpressionOperable
+final public class Property : WCDB.Describable {
+  final public var description: Swift.String {
+    get
+  }
+  final public var codingTableKey: WCDB.CodingTableKeyBase? {
+    get
+  }
+  final public var wctProperty: WCDB.WCTBridgeProperty? {
+    get
+  }
+  public init(named name: Swift.String, with codingTableKey: WCDB.CodingTableKeyBase?, with wctProperty: WCDB.WCTBridgeProperty?)
+  public init(named name: Swift.String, with wctProperty: WCDB.WCTBridgeProperty?)
+  public init(named name: Swift.String, with codingTableKey: WCDB.CodingTableKeyBase?)
+  public init(with codingTableKey: WCDB.CodingTableKeyBase)
+  final public var name: Swift.String {
+    get
+  }
+  @objc deinit
+}
+extension WCDB.Property : WCDB.PropertyOperable {
+  final public func isSwiftProperty() -> Swift.Bool
+  final public func asProperty() -> WCDB.Property
+  final public func `in`(table: Swift.String) -> WCDB.Property
+  final public func of(schema schemaConvertible: WCDB.SchemaConvertible) -> WCDB.Property
+  final public func asColumn() -> WCDB.Column
+}
+extension WCDB.Handle : WCDB.StatementInterfaceForObjc {
+}
+extension WCDB.Handle : WCDB.InsertChainCallInterfaceForObjc {
+}
+extension WCDB.Handle : WCDB.SelectChainCallInterfaceForObjc {
+}
+extension WCDB.Handle : WCDB.InsertInterfaceForObjc {
+}
+extension WCDB.Handle : WCDB.UpdateInterfaceForObjc {
+}
+extension WCDB.Handle : WCDB.SelectInterfaceForObjc {
+}
+public typealias Tag = Swift.Int
+@_hasMissingDesignatedInitializers final public class StatementSavepoint : WCDB.Identifier<WCDB_Private.CPPStatementSavepoint>, WCDB.Statement {
+  public init()
+  @discardableResult
+  final public func savepoint(_ name: Swift.String) -> WCDB.StatementSavepoint
+  @objc deinit
+}
+extension WCDB.Select {
+  final public func nextObject<Object>(of type: Object.Type = Object.self) throws -> Object? where Object : WCDB.WCTTableCoding
+  final public func allObjects<Object>(of type: Object.Type = Object.self) throws -> [Object] where Object : WCDB.WCTTableCoding
+}
+extension WCDB.ForeignKey.Action : Swift.Equatable {}
+extension WCDB.ForeignKey.Action : Swift.Hashable {}
+extension WCDB.ForeignKey.MatchType : Swift.Equatable {}
+extension WCDB.ForeignKey.MatchType : Swift.Hashable {}
+extension WCDB.ForeignKey.Deferrable : Swift.Equatable {}
+extension WCDB.ForeignKey.Deferrable : Swift.Hashable {}
+extension WCDB.Order : Swift.Equatable {}
+extension WCDB.Order : Swift.Hashable {}
+extension WCDB.ConflictAction : Swift.Equatable {}
+extension WCDB.ConflictAction : Swift.Hashable {}
+extension WCDB.ColumnType : Swift.Equatable {}
+extension WCDB.ColumnType : Swift.Hashable {}
+extension WCDB.TransactionType : Swift.Equatable {}
+extension WCDB.TransactionType : Swift.Hashable {}
+extension WCDB.FTSVersion : Swift.Equatable {}
+extension WCDB.FTSVersion : Swift.Hashable {}
+extension WCDB.Database.CipherVersion : Swift.Equatable {}
+extension WCDB.Database.CipherVersion : Swift.Hashable {}
+extension WCDB.Database.CipherVersion : Swift.RawRepresentable {}
+extension WCDB.Database.Operation : Swift.Equatable {}
+extension WCDB.Database.Operation : Swift.Hashable {}
+extension WCDB.Database.Operation : Swift.RawRepresentable {}
+extension WCDB.Database.ConfigPriority : Swift.Equatable {}
+extension WCDB.Database.ConfigPriority : Swift.Hashable {}
+extension WCDB.Database.ConfigPriority : Swift.RawRepresentable {}
+extension WCDB.ErrorValue.ErrorValueType : Swift.Equatable {}
+extension WCDB.ErrorValue.ErrorValueType : Swift.Hashable {}
+extension WCDB.WCDBError.Code : Swift.Equatable {}
+extension WCDB.WCDBError.Code : Swift.Hashable {}
+extension WCDB.WCDBError.Code : Swift.RawRepresentable {}
+extension WCDB.WCDBError.ExtendCode : Swift.Equatable {}
+extension WCDB.WCDBError.ExtendCode : Swift.Hashable {}
+extension WCDB.WCDBError.ExtendCode : Swift.RawRepresentable {}
+extension WCDB.WCDBError.Level : Swift.Equatable {}
+extension WCDB.WCDBError.Level : Swift.Hashable {}
+extension WCDB.WCDBError.Level : Swift.RawRepresentable {}
+extension WCDB.WCDBError.Key : Swift.Equatable {}
+extension WCDB.WCDBError.Key : Swift.Hashable {}
+extension WCDB.WCDBError.Key : Swift.RawRepresentable {}
+extension WCDB.TokenizerErrorCode : Swift.Equatable {}
+extension WCDB.TokenizerErrorCode : Swift.Hashable {}
